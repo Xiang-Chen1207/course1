@@ -9,8 +9,8 @@
 - 支持多CPU并行处理
 
 使用方法：
-  python merged_segment_extraction.py -i /mnt/dataset2/benchmark_dataloader/hdf5/TUEV -o /mnt/dataset4/cx/code/EEG_LLM_text/TUEV --merge-count 1 --preset fast
-  python merged_segment_extraction.py -i /mnt/dataset2/hdf5_datasets/Workload_MATB -o /mnt/dataset4/cx/code/EEG_LLM_text/Workload_fast --merge-count 1 --preset fast --microstate-segs 10
+  python merged_segment_extraction.py -i /eeg-h5-files/SEEDVII_emo -o /mnt/cx/EEG_text/raw_data/SEEDVII_emo_fast --merge-count 1 --preset fast
+  python merged_segment_extraction.py -i /pretrain-clip/hdf5_datasets/Workload_MATB -o /mnt/cx/EEG_text/raw_data/Workload_fast --merge-count 1 --preset fast
     # 每15个segment合并成1个（默认按trial内合并）
     python merged_segment_extraction.py -i /mnt/dataset2/hdf5_datasets/Workload_MATB -o /mnt/dataset4/cx/code/EEG_LLM_text/Workload_new_full --merge-count 1
     python merged_segment_extraction.py -i /mnt/dataset2/hdf5_datasets/SEED -o /mnt/dataset4/cx/code/EEG_LLM_text/SEED_2s_full --merge-count 1 --preset full
@@ -39,6 +39,8 @@ from tqdm import tqdm
 import warnings
 import traceback
 from concurrent.futures import ProcessPoolExecutor, ThreadPoolExecutor, as_completed, TimeoutError as FuturesTimeoutError
+from queue import Queue
+from threading import Thread
 import multiprocessing as mp
 
 # 添加项目路径
@@ -244,7 +246,8 @@ class MergedSegmentExtractor:
                  merge_count: int = 2,
                  cross_trial: bool = False,
                  n_jobs: Optional[int] = None,
-                 microstate_segments_per_trial: Optional[int] = None):
+                 microstate_segments_per_trial: Optional[int] = None,
+                 prefetch_buffer: int = 2):
         """
         初始化
 
@@ -264,6 +267,7 @@ class MergedSegmentExtractor:
         self.cross_trial = cross_trial
         self.n_jobs = n_jobs if n_jobs is not None else _get_optimal_n_jobs()
         self.microstate_segments_per_trial = microstate_segments_per_trial
+        self.prefetch_buffer = max(0, int(prefetch_buffer))
 
         # PSD 计算器
         self.psd_computer = PSDComputer(
@@ -387,16 +391,37 @@ class MergedSegmentExtractor:
                 end_idx = start_idx + self.merge_count
 
                 # 收集要合并的 segments
-                segments_to_merge = []
-                for seg_name in segment_names[start_idx:end_idx]:
-                    seg = loader.get_segment(trial_name, seg_name)
-                    segments_to_merge.append((trial_name, seg_name, seg))
+                seg_names = segment_names[start_idx:end_idx]
+                seg_list = loader.get_segments(trial_name, seg_names)
+                segments_to_merge = [(trial_name, seg_name, seg)
+                                     for seg_name, seg in zip(seg_names, seg_list)]
 
                 # 合并
                 merged = self._merge_segment_list(segments_to_merge, subject_id)
                 merged_segments.append(merged)
 
         return merged_segments
+
+    def _iter_merged_segments_within_trial(self, loader: EEGDataLoader, subject_id: str):
+        """按 trial 内合并 segments（流式生成）"""
+        for trial_name in loader.get_trial_names():
+            segment_names = loader.get_segment_names(trial_name)
+
+            # 计算可以组成多少个完整的合并单元
+            n_complete_groups = len(segment_names) // self.merge_count
+            if n_complete_groups == 0:
+                continue
+
+            for group_idx in range(n_complete_groups):
+                start_idx = group_idx * self.merge_count
+                end_idx = start_idx + self.merge_count
+
+                seg_names = segment_names[start_idx:end_idx]
+                seg_list = loader.get_segments(trial_name, seg_names)
+                segments_to_merge = [(trial_name, seg_name, seg)
+                                     for seg_name, seg in zip(seg_names, seg_list)]
+
+                yield self._merge_segment_list(segments_to_merge, subject_id)
 
     def _merge_segments_cross_trial(self, loader: EEGDataLoader, subject_id: str) -> List[MergedSegmentData]:
         """
@@ -411,8 +436,11 @@ class MergedSegmentExtractor:
         """
         # 收集所有 segments
         all_segments = []
-        for trial_name, segment_name, segment in loader.iter_segments():
-            all_segments.append((trial_name, segment_name, segment))
+        for trial_name in loader.get_trial_names():
+            seg_names = loader.get_segment_names(trial_name)
+            seg_list = loader.get_segments(trial_name, seg_names)
+            all_segments.extend([(trial_name, seg_name, seg)
+                                 for seg_name, seg in zip(seg_names, seg_list)])
 
         merged_segments = []
 
@@ -431,6 +459,18 @@ class MergedSegmentExtractor:
             merged_segments.append(merged)
 
         return merged_segments
+
+    def _iter_merged_segments_cross_trial(self, loader: EEGDataLoader, subject_id: str):
+        """跨 trial 合并 segments（流式生成）"""
+        buffer: List[Tuple[str, str, SegmentData]] = []
+        for trial_name in loader.get_trial_names():
+            seg_names = loader.get_segment_names(trial_name)
+            seg_list = loader.get_segments(trial_name, seg_names)
+            for seg_name, seg in zip(seg_names, seg_list):
+                buffer.append((trial_name, seg_name, seg))
+                if len(buffer) == self.merge_count:
+                    yield self._merge_segment_list(buffer, subject_id)
+                    buffer = []
 
     def _compute_microstate_template(self, loader: EEGDataLoader, verbose: bool = True) -> MicrostateAnalyzer:
         """从该被试的 segments 生成微状态模板（使用 GFP 峰值地形图节省内存）。
@@ -584,67 +624,83 @@ class MergedSegmentExtractor:
         output_path = Path(output_dir)
         output_path.mkdir(parents=True, exist_ok=True)
 
-        loader = EEGDataLoader(h5_path)
-        subject_info = loader.get_subject_info()
+        with EEGDataLoader(h5_path) as loader:
+            subject_info = loader.get_subject_info()
 
-        # 同步当前文件的通道与采样率配置，避免使用默认 62 通道
-        self.config.update_from_electrode_names(subject_info.channel_names)
-        self.config.sampling_rate = subject_info.sampling_rate
-        # 重建 PSD 计算器与特征计算器以匹配新的通道设置
-        self.psd_computer = PSDComputer(
-            sampling_rate=self.config.sampling_rate,
-            use_gpu=self.config.use_gpu,
-            nperseg=self.config.nperseg,
-            noverlap=self.config.noverlap,
-            nfft=self.config.nfft
-        )
-        self.feature_computers = {}
-        self._initialize_computers()
+            # 同步当前文件的通道与采样率配置，避免使用默认 62 通道
+            self.config.update_from_electrode_names(subject_info.channel_names)
+            self.config.sampling_rate = subject_info.sampling_rate
+            # 重建 PSD 计算器与特征计算器以匹配新的通道设置
+            self.psd_computer = PSDComputer(
+                sampling_rate=self.config.sampling_rate,
+                use_gpu=self.config.use_gpu,
+                nperseg=self.config.nperseg,
+                noverlap=self.config.noverlap,
+                nfft=self.config.nfft
+            )
+            self.feature_computers = {}
+            self._initialize_computers()
 
-        # 获取原始统计信息
-        trial_names = loader.get_trial_names()
-        total_segments = sum(len(loader.get_segment_names(t)) for t in trial_names)
+            # 获取原始统计信息
+            trial_names = loader.get_trial_names()
+            total_segments = sum(len(loader.get_segment_names(t)) for t in trial_names)
+            if self.cross_trial:
+                total_merged = total_segments // self.merge_count
+            else:
+                total_merged = sum(len(loader.get_segment_names(t)) // self.merge_count for t in trial_names)
 
-        if verbose:
-            print(f"\n处理被试 {subject_info.subject_id}")
-            print(f"原始 Trials: {len(trial_names)}, 原始 Segments: {total_segments}")
-            print(f"合并模式: {'跨 Trial' if self.cross_trial else 'Trial 内'}")
-            print(f"合并数量: 每 {self.merge_count} 个 segment 合并为 1 个")
-
-        # 执行合并
-        if self.cross_trial:
-            merged_segments = self._merge_segments_cross_trial(loader, subject_info.subject_id)
-        else:
-            merged_segments = self._merge_segments_within_trial(loader, subject_info.subject_id)
-
-        # 如果选择了 microstate 特征，先生成 subject 级模板
-        microstate_analyzer = None
-        if 'microstate' in self.selection_config.get_required_groups():
-            microstate_analyzer = self._compute_microstate_template(loader, verbose=verbose)
-
-        if verbose:
-            print(f"合并后 Segments: {len(merged_segments)}")
-            discarded = total_segments - len(merged_segments) * self.merge_count
-            if discarded > 0:
-                print(f"丢弃 Segments: {discarded}（不足以组成完整合并单元）")
-            print(f"选定特征数: {len(self.get_selected_features())}")
-            if use_parallel and self.n_jobs > 1:
-                print(f"使用 {self.n_jobs} 个CPU进程并行处理")
-
-        if len(merged_segments) == 0:
             if verbose:
-                print("警告: 没有足够的 segments 可以合并")
-            return pd.DataFrame()
+                print(f"\n处理被试 {subject_info.subject_id}")
+                print(f"原始 Trials: {len(trial_names)}, 原始 Segments: {total_segments}")
+                print(f"合并模式: {'跨 Trial' if self.cross_trial else 'Trial 内'}")
+                print(f"合并数量: 每 {self.merge_count} 个 segment 合并为 1 个")
+                if not use_parallel or self.n_jobs <= 1:
+                    if self.prefetch_buffer > 0:
+                        print(f"预取缓冲: {self.prefetch_buffer}")
+                    else:
+                        print("预取缓冲: 关闭")
 
-        if use_parallel and self.n_jobs > 1:
-            df_all = self._process_parallel(merged_segments, output_path, verbose, microstate_analyzer)
-        else:
-            df_all = self._process_sequential(merged_segments, output_path, verbose, microstate_analyzer)
+            # 执行合并
+            if use_parallel and self.n_jobs > 1:
+                if self.cross_trial:
+                    merged_segments = self._merge_segments_cross_trial(loader, subject_info.subject_id)
+                else:
+                    merged_segments = self._merge_segments_within_trial(loader, subject_info.subject_id)
+            else:
+                if self.cross_trial:
+                    merged_segments = self._iter_merged_segments_cross_trial(loader, subject_info.subject_id)
+                else:
+                    merged_segments = self._iter_merged_segments_within_trial(loader, subject_info.subject_id)
 
-        if verbose:
-            print(f"结果保存至目录: {output_path}")
+            # 如果选择了 microstate 特征，先生成 subject 级模板
+            microstate_analyzer = None
+            if 'microstate' in self.selection_config.get_required_groups():
+                microstate_analyzer = self._compute_microstate_template(loader, verbose=verbose)
 
-        return df_all
+            if verbose:
+                print(f"合并后 Segments: {len(merged_segments)}")
+                discarded = total_segments - len(merged_segments) * self.merge_count
+                if discarded > 0:
+                    print(f"丢弃 Segments: {discarded}（不足以组成完整合并单元）")
+                print(f"选定特征数: {len(self.get_selected_features())}")
+                if use_parallel and self.n_jobs > 1:
+                    print(f"使用 {self.n_jobs} 个CPU进程并行处理")
+
+            if total_merged == 0:
+                if verbose:
+                    print("警告: 没有足够的 segments 可以合并")
+                return pd.DataFrame()
+
+            if use_parallel and self.n_jobs > 1:
+                df_all = self._process_parallel(merged_segments, output_path, verbose, microstate_analyzer)
+            else:
+                df_all = self._process_sequential_stream(merged_segments, total_merged, output_path,
+                                                         verbose, microstate_analyzer)
+
+            if verbose:
+                print(f"结果保存至目录: {output_path}")
+
+            return df_all
 
     def _process_sequential(self, merged_segments: List[MergedSegmentData],
                             output_path: Path, verbose: bool,
@@ -690,6 +746,107 @@ class MergedSegmentExtractor:
             print(f"共生成 {len(all_results)} 个合并 segment CSV")
 
         # 返回汇总 DataFrame
+        if all_results:
+            df_all = pd.DataFrame(all_results)
+            feature_cols_all = [c for c in selected_features if c in df_all.columns]
+            other_cols_all = [c for c in df_all.columns if c not in meta_cols and c not in feature_cols_all]
+            df_all = df_all[meta_cols + feature_cols_all + other_cols_all]
+        else:
+            df_all = pd.DataFrame()
+
+        return df_all
+
+    def _process_sequential_stream(self, merged_segments_iter,
+                                   total_merged: int,
+                                   output_path: Path, verbose: bool,
+                                   microstate_analyzer: Optional[MicrostateAnalyzer]) -> pd.DataFrame:
+        """顺序处理合并后的 segments（流式 + 预取）"""
+        meta_cols = ['subject_id', 'trial_ids', 'segment_ids', 'session_id', 'primary_label', 'labels',
+                     'start_time', 'end_time', 'total_time_length', 'merge_count', 'source_segments']
+        selected_features = self.get_selected_features()
+
+        all_results = []
+        idx = 0
+
+        iterator = merged_segments_iter
+        if verbose:
+            iterator = tqdm(merged_segments_iter, total=total_merged, desc="提取特征")
+
+        if self.prefetch_buffer <= 0:
+            for merged_seg in iterator:
+                features = self.extract_features(merged_seg.eeg_data, microstate_analyzer=microstate_analyzer)
+
+                # 添加元信息
+                features['subject_id'] = merged_seg.subject_id
+                features['trial_ids'] = str(merged_seg.trial_ids)
+                features['segment_ids'] = str(merged_seg.segment_ids)
+                features['session_id'] = merged_seg.session_id
+                features['primary_label'] = merged_seg.primary_label
+                features['labels'] = str(merged_seg.labels)
+                features['start_time'] = merged_seg.start_time
+                features['end_time'] = merged_seg.end_time
+                features['total_time_length'] = merged_seg.total_time_length
+                features['merge_count'] = merged_seg.merge_count
+                features['source_segments'] = str(merged_seg.source_segments)
+
+                all_results.append(features)
+
+                df_seg = pd.DataFrame([features])
+                feature_cols = [c for c in selected_features if c in df_seg.columns]
+                other_cols = [c for c in df_seg.columns if c not in meta_cols and c not in feature_cols]
+                df_seg = df_seg[meta_cols + feature_cols + other_cols]
+
+                csv_path = output_path / f"merged_segment_{idx:04d}.csv"
+                df_seg.to_csv(csv_path, index=False, encoding='utf-8')
+                idx += 1
+        else:
+            q: Queue = Queue(maxsize=self.prefetch_buffer)
+            sentinel = object()
+
+            def _producer():
+                try:
+                    for item in merged_segments_iter:
+                        q.put(item)
+                finally:
+                    q.put(sentinel)
+
+            Thread(target=_producer, daemon=True).start()
+
+            while True:
+                item = q.get()
+                if item is sentinel:
+                    break
+
+                merged_seg = item
+                features = self.extract_features(merged_seg.eeg_data, microstate_analyzer=microstate_analyzer)
+
+                # 添加元信息
+                features['subject_id'] = merged_seg.subject_id
+                features['trial_ids'] = str(merged_seg.trial_ids)
+                features['segment_ids'] = str(merged_seg.segment_ids)
+                features['session_id'] = merged_seg.session_id
+                features['primary_label'] = merged_seg.primary_label
+                features['labels'] = str(merged_seg.labels)
+                features['start_time'] = merged_seg.start_time
+                features['end_time'] = merged_seg.end_time
+                features['total_time_length'] = merged_seg.total_time_length
+                features['merge_count'] = merged_seg.merge_count
+                features['source_segments'] = str(merged_seg.source_segments)
+
+                all_results.append(features)
+
+                df_seg = pd.DataFrame([features])
+                feature_cols = [c for c in selected_features if c in df_seg.columns]
+                other_cols = [c for c in df_seg.columns if c not in meta_cols and c not in feature_cols]
+                df_seg = df_seg[meta_cols + feature_cols + other_cols]
+
+                csv_path = output_path / f"merged_segment_{idx:04d}.csv"
+                df_seg.to_csv(csv_path, index=False, encoding='utf-8')
+                idx += 1
+
+        if verbose:
+            print(f"共生成 {len(all_results)} 个合并 segment CSV")
+
         if all_results:
             df_all = pd.DataFrame(all_results)
             feature_cols_all = [c for c in selected_features if c in df_all.columns]
@@ -879,6 +1036,9 @@ def main():
                         dest='microstate_segments_per_trial',
                         help='每个 trial 用于生成微状态模板的 segment 数量（默认: 使用所有 segments）')
 
+    parser.add_argument('--prefetch-buffer', type=int, default=2,
+                        help='顺序模式下的预取缓冲大小（0 表示关闭预取，默认: 2）')
+
     # 其他选项
     parser.add_argument('--no-gpu', action='store_true', help='禁用 GPU')
     parser.add_argument('-q', '--quiet', action='store_true', help='安静模式')
@@ -970,7 +1130,8 @@ def main():
             merge_count=args.merge_count,
             cross_trial=args.cross_trial,
             n_jobs=args.n_jobs,
-            microstate_segments_per_trial=args.microstate_segments_per_trial
+            microstate_segments_per_trial=args.microstate_segments_per_trial,
+            prefetch_buffer=args.prefetch_buffer
         )
 
         # 每个输入文件单独创建子输出目录
