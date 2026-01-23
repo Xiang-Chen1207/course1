@@ -724,10 +724,20 @@ def get_input_chans(ch_names):
 
 
 class TUABLoader(torch.utils.data.Dataset):
-    def __init__(self, samples, sampling_rate=200, cache_size=4):
+    def __init__(self, samples, sampling_rate=200, cache_size=32):
+        """
+        Lazy HDF5 loader for TUAB dataset.
+
+        Args:
+            samples: List of (file_path, trial_key, segment_key, label) tuples
+            sampling_rate: Target sampling rate
+            cache_size: Number of HDF5 files to cache (LRU). Larger = fewer file open/close ops.
+                       Recommended: 32-64 for better IO performance on slow storage.
+        """
         self.samples = samples
         self.default_rate = 200
         self.sampling_rate = sampling_rate
+        # Increase default cache_size for better IO performance on slow storage
         self.cache_size = max(int(cache_size), 0)
         # Use OrderedDict for O(1) LRU cache operations
         from collections import OrderedDict
@@ -745,7 +755,8 @@ class TUABLoader(torch.utils.data.Dataset):
                 # O(1) move to end operation with OrderedDict
                 self._file_cache.move_to_end(file_path_str)
             else:
-                f = h5py.File(file_path, 'r')
+                # Open file with increased chunk cache for better read performance
+                f = h5py.File(file_path, 'r', rdcc_nbytes=4*1024*1024, rdcc_nslots=10007)
                 if self.cache_size > 0:
                     self._file_cache[file_path_str] = f
                     # Evict oldest entries if over capacity
