@@ -27,6 +27,12 @@ export PYTORCH_CUDA_ALLOC_CONF=${PYTORCH_CUDA_ALLOC_CONF:-"expandable_segments:T
 # Avoid HDF5 file locking issues on shared filesystems
 export HDF5_USE_FILE_LOCKING=${HDF5_USE_FILE_LOCKING:-"FALSE"}
 
+# Performance optimizations
+export OMP_NUM_THREADS=${OMP_NUM_THREADS:-4}
+export MKL_NUM_THREADS=${MKL_NUM_THREADS:-4}
+# Enable cuDNN autotuning for better performance on fixed input sizes
+export CUDNN_BENCHMARK=${CUDNN_BENCHMARK:-1}
+
 # Conda environment
 CONDA_ENV="labram"
 

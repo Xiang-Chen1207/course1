@@ -75,6 +75,7 @@ def train_one_epoch(model: torch.nn.Module, vqnsp: torch.nn.Module,
     for data_loader, ch_names in zip(data_loader_list, ch_names_list):
         if len(data_loader) == 0:
             continue
+        # Pre-compute input_chans once per data_loader (not per batch)
         input_chans = utils.get_input_chans(ch_names)
 
         # Use tqdm progress bar for training
@@ -152,8 +153,8 @@ def train_one_epoch(model: torch.nn.Module, vqnsp: torch.nn.Module,
             if (step + 1) % args.gradient_accumulation_steps == 0:
                 optimizer.zero_grad()
 
-            torch.cuda.synchronize()
-            
+            # Removed torch.cuda.synchronize() - unnecessary sync that blocks GPU pipeline
+            # Accuracy computation already triggers implicit sync via .item()
             mlm_acc = (x_rec.max(-1)[1] == labels).float().mean().item()
             mlm_acc_sym = (x_rec_sym.max(-1)[1] == labels_sym).float().mean().item()
             metric_logger.update(mlm_acc=mlm_acc)

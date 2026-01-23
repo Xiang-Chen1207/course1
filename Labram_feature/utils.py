@@ -40,18 +40,22 @@ from sklearn.metrics import mean_squared_error
 from scipy.stats import pearsonr
 
 
-standard_1020 = [ 
-         'FP1', 'FPZ', 'FP2', 
-         'AF9', 'AF7', 'AF5', 'AF3', 'AF1', 'AFZ', 'AF2', 'AF4', 'AF6', 'AF8', 'AF10', 
-         'T1', 'F9', 'F7', 'F5', 'F3', 'F1', 'FZ', 'F2', 'F4', 'F6', 'F8', 'F10', 'T2', 
-         'FT9', 'FT7', 'FC5', 'FC3', 'FC1', 'FCZ', 'FC2', 'FC4', 'FC6', 'FT8', 'FT10', 
-         'A1', 'T9', 'T7', 'C5', 'C3', 'C1', 'CZ', 'C2', 'C4', 'C6', 'T8', 'T10', 'A2', 
-         'TP9', 'TP7', 'CP5', 'CP3', 'CP1', 'CPZ', 'CP2', 'CP4', 'CP6', 'TP8', 'TP10', 
-         'P9', 'P7', 'P5', 'P3', 'P1', 'PZ', 'P2', 'P4', 'P6', 'P8', 'P10', 
-         'PO9', 'PO7', 'PO5', 'PO3', 'PO1', 'POZ', 'PO2', 'PO4', 'PO6', 'PO8', 'PO10', 
-         'O1', 'OZ', 'O2', 
-         'I1', 'IZ', 'I2', 
+standard_1020 = [
+         'FP1', 'FPZ', 'FP2',
+         'AF9', 'AF7', 'AF5', 'AF3', 'AF1', 'AFZ', 'AF2', 'AF4', 'AF6', 'AF8', 'AF10',
+         'T1', 'F9', 'F7', 'F5', 'F3', 'F1', 'FZ', 'F2', 'F4', 'F6', 'F8', 'F10', 'T2',
+         'FT9', 'FT7', 'FC5', 'FC3', 'FC1', 'FCZ', 'FC2', 'FC4', 'FC6', 'FT8', 'FT10',
+         'A1', 'T9', 'T7', 'C5', 'C3', 'C1', 'CZ', 'C2', 'C4', 'C6', 'T8', 'T10', 'A2',
+         'TP9', 'TP7', 'CP5', 'CP3', 'CP1', 'CPZ', 'CP2', 'CP4', 'CP6', 'TP8', 'TP10',
+         'P9', 'P7', 'P5', 'P3', 'P1', 'PZ', 'P2', 'P4', 'P6', 'P8', 'P10',
+         'PO9', 'PO7', 'PO5', 'PO3', 'PO1', 'POZ', 'PO2', 'PO4', 'PO6', 'PO8', 'PO10',
+         'O1', 'OZ', 'O2',
+         'I1', 'IZ', 'I2',
      ]
+
+# Pre-computed channel index lookup for O(1) access instead of O(n) list.index()
+STANDARD_1020_INDEX = {ch: i for i, ch in enumerate(standard_1020)}
+NUM_STANDARD_CHANNELS = len(standard_1020)
 
 
 def bool_flag(s):
@@ -708,9 +712,14 @@ def build_pretraining_dataset(datasets: list, time_window: list, stride_size=200
 
 
 def get_input_chans(ch_names):
-    input_chans = [0] # for cls token
+    input_chans = [0]  # for cls token
     for ch_name in ch_names:
-        input_chans.append(standard_1020.index(ch_name) + 1)
+        idx = STANDARD_1020_INDEX.get(ch_name)
+        if idx is not None:
+            input_chans.append(idx + 1)
+        else:
+            # Fallback to list search if not found in dict (shouldn't happen normally)
+            input_chans.append(standard_1020.index(ch_name) + 1)
     return input_chans
 
 
@@ -720,8 +729,9 @@ class TUABLoader(torch.utils.data.Dataset):
         self.default_rate = 200
         self.sampling_rate = sampling_rate
         self.cache_size = max(int(cache_size), 0)
-        self._file_cache = {}
-        self._file_cache_order = deque()
+        # Use OrderedDict for O(1) LRU cache operations
+        from collections import OrderedDict
+        self._file_cache = OrderedDict()
 
     def __len__(self):
         return len(self.samples)
@@ -732,22 +742,19 @@ class TUABLoader(torch.utils.data.Dataset):
             file_path_str = str(file_path)
             if self.cache_size > 0 and file_path_str in self._file_cache:
                 f = self._file_cache[file_path_str]
-                if file_path_str in self._file_cache_order:
-                    self._file_cache_order.remove(file_path_str)
-                self._file_cache_order.append(file_path_str)
+                # O(1) move to end operation with OrderedDict
+                self._file_cache.move_to_end(file_path_str)
             else:
                 f = h5py.File(file_path, 'r')
                 if self.cache_size > 0:
                     self._file_cache[file_path_str] = f
-                    self._file_cache_order.append(file_path_str)
-                    if len(self._file_cache_order) > self.cache_size:
-                        old_path = self._file_cache_order.popleft()
-                        old_f = self._file_cache.pop(old_path, None)
-                        if old_f is not None:
-                            try:
-                                old_f.close()
-                            except Exception:
-                                pass
+                    # Evict oldest entries if over capacity
+                    while len(self._file_cache) > self.cache_size:
+                        _, old_f = self._file_cache.popitem(last=False)
+                        try:
+                            old_f.close()
+                        except Exception:
+                            pass
 
             data = f[trial_key][segment_key]['eeg'][()]
 
@@ -761,17 +768,17 @@ class TUABLoader(torch.utils.data.Dataset):
                 ch_names = f[trial_key][segment_key]['eeg'].attrs['chOrder']
 
             if ch_names is not None:
-                new_data = np.zeros((len(standard_1020), data.shape[1]), dtype=data.dtype)
+                new_data = np.zeros((NUM_STANDARD_CHANNELS, data.shape[1]), dtype=data.dtype)
                 if len(ch_names) > 0 and isinstance(ch_names[0], bytes):
                     ch_names = [c.decode('utf-8') for c in ch_names]
                 for i, ch in enumerate(ch_names):
-                    ch = ch.upper().strip()
-                    if ch in standard_1020:
-                        idx = standard_1020.index(ch)
+                    ch_upper = ch.upper().strip()
+                    idx = STANDARD_1020_INDEX.get(ch_upper)
+                    if idx is not None:
                         new_data[idx] = data[i]
                 data = new_data
             else:
-                new_data = np.zeros((len(standard_1020), data.shape[1]), dtype=data.dtype)
+                new_data = np.zeros((NUM_STANDARD_CHANNELS, data.shape[1]), dtype=data.dtype)
                 data = new_data
             
             X = data
