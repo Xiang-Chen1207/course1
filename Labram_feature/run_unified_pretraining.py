@@ -435,9 +435,22 @@ def main(args):
     test_df = merged_df[merged_df['sub_id'].isin(test_subs)]
     
     log("Building datasets...")
-    dataset_train = FeaturePredictionDataset(train_df, hdf5_root=args.hdf5_root, window_size=args.input_size, hdf5_root_map=hdf5_root_map)
-    dataset_val = FeaturePredictionDataset(val_df, hdf5_root=args.hdf5_root, window_size=args.input_size, hdf5_root_map=hdf5_root_map)
-    dataset_test = FeaturePredictionDataset(test_df, hdf5_root=args.hdf5_root, window_size=args.input_size, hdf5_root_map=hdf5_root_map)
+    # Increase cache_size for better HDF5 file reuse, skip expensive pre-resolution checks
+    dataset_train = FeaturePredictionDataset(
+        train_df, hdf5_root=args.hdf5_root, window_size=args.input_size,
+        cache_size=8, hdf5_root_map=hdf5_root_map,
+        skip_pre_resolve=True, skip_existence_check=True
+    )
+    dataset_val = FeaturePredictionDataset(
+        val_df, hdf5_root=args.hdf5_root, window_size=args.input_size,
+        cache_size=8, hdf5_root_map=hdf5_root_map,
+        skip_pre_resolve=True, skip_existence_check=True
+    )
+    dataset_test = FeaturePredictionDataset(
+        test_df, hdf5_root=args.hdf5_root, window_size=args.input_size,
+        cache_size=8, hdf5_root_map=hdf5_root_map,
+        skip_pre_resolve=True, skip_existence_check=True
+    )
     
     if utils.is_main_process():
         log(f"Train samples: {len(dataset_train)} ({len(train_subs)} subs)")
@@ -496,7 +509,7 @@ def main(args):
             pin_memory=args.pin_mem,
             drop_last=True,
             persistent_workers=args.num_workers > 0,
-            prefetch_factor=2 if args.num_workers > 0 else None,
+            prefetch_factor=4 if args.num_workers > 0 else None,  # Increased prefetch for better overlap
         )
         data_loader_train_list.append(data_loader_train)
 
