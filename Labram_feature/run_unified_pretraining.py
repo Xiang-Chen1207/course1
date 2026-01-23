@@ -22,6 +22,7 @@ from einops import rearrange
 from engine_for_pretraining import random_masking
 from scipy.stats import pearsonr
 from sklearn.metrics import r2_score
+from tqdm import tqdm
 
 # Dataset paths
 DATASETS = {
@@ -193,19 +194,29 @@ def evaluate_regression(model, dataset_eval, device, args):
 
     if utils.is_main_process():
         print("Evaluating regression...")
-        
+
+    # Use tqdm progress bar for evaluation
+    pbar = tqdm(
+        data_loader,
+        total=len(data_loader),
+        desc="Evaluating",
+        disable=not utils.is_main_process(),
+        ncols=100,
+        bar_format='{l_bar}{bar}| {n_fmt}/{total_fmt} [{elapsed}<{remaining}]'
+    )
+
     with torch.no_grad():
-        for batch in data_loader:
+        for batch in pbar:
             samples, features = batch
             samples = samples.float().to(device) / 100
             features = features.to(device)
             samples = rearrange(samples, 'B N (A T) -> B N A T', T=200)
-            
+
             bool_masked_pos = random_masking(samples.flatten(1, 2), mask_ratio=0.5).to(device)
-            
+
             outputs = model(samples, input_chans=input_chans, bool_masked_pos=bool_masked_pos)
             reg_output = outputs[2]
-            
+
             all_preds.append(reg_output)
             all_targets.append(features)
             
@@ -534,14 +545,24 @@ def main(args):
 
     print(f"Start training for {args.epochs} epochs")
     start_time = time.time()
-    
+
     # Create log file
     if utils.is_main_process():
         log_file_path = os.path.join(args.output_dir, "loss_log.csv") if args.output_dir else "loss_log.csv"
         with open(log_file_path, "w") as f:
             f.write("epoch,loss,loss_rec,reg_loss\n")
-        
-    for epoch in range(args.start_epoch, args.epochs):
+
+    # Progress bar for epochs
+    epoch_pbar = tqdm(
+        range(args.start_epoch, args.epochs),
+        desc="Training",
+        disable=not utils.is_main_process(),
+        ncols=100,
+        position=0
+    )
+
+    for epoch in epoch_pbar:
+        epoch_pbar.set_description(f"Epoch {epoch}/{args.epochs-1}")
         if args.distributed:
             for data_loader_train in data_loader_train_list:
                 data_loader_train.sampler.set_epoch(epoch)
@@ -564,7 +585,13 @@ def main(args):
             epoch_loss = train_stats.get('loss', 0)
             epoch_loss_rec = train_stats.get('loss_rec', 0)
             epoch_reg_loss = train_stats.get('reg_loss', 0)
-            
+
+            # Update epoch progress bar with loss info
+            epoch_pbar.set_postfix({
+                'loss': f'{epoch_loss:.4f}',
+                'rec': f'{epoch_loss_rec:.4f}'
+            })
+
             with open(log_file_path, "a") as f:
                 f.write(f"{epoch},{epoch_loss},{epoch_loss_rec},{epoch_reg_loss}\n")
             

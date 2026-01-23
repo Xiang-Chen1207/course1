@@ -152,7 +152,20 @@ class ShockDataset(Dataset):
 
 
 class FeaturePredictionDataset(Dataset):
-    def __init__(self, dataframe, hdf5_root, window_size=1600, cache_size=4, hdf5_root_map=None):
+    def __init__(self, dataframe, hdf5_root, window_size=1600, cache_size=4, hdf5_root_map=None,
+                 skip_pre_resolve=True, skip_existence_check=True):
+        """
+        Optimized dataset for feature prediction.
+
+        Args:
+            dataframe: DataFrame with feature data and file metadata
+            hdf5_root: Root directory for HDF5 files
+            window_size: Size of EEG window to extract
+            cache_size: Number of HDF5 files to cache (LRU)
+            hdf5_root_map: Optional dict mapping dataset names to HDF5 roots
+            skip_pre_resolve: If True, skip slow pre-resolution of paths (recommended for large datasets)
+            skip_existence_check: If True, skip file existence checks during init (recommended)
+        """
         self.dataframe = dataframe.reset_index(drop=True)
         self.hdf5_root = Path(hdf5_root) if hdf5_root else None
         self.window_size = window_size
@@ -162,7 +175,7 @@ class FeaturePredictionDataset(Dataset):
             self.hdf5_root_map = {
                 _normalize_dataset_key(k): Path(v) for k, v in hdf5_root_map.items()
             }
-        
+
         # Identify feature columns
         metadata_cols = [
             'trial_ids', 'segment_ids', 'session_id', 'primary_label', 'labels',
@@ -170,42 +183,29 @@ class FeaturePredictionDataset(Dataset):
             'source_segments', 'source_file', 'sub_id', 'subject_id', 'unique_sub_id', 'dataset_source'
         ]
         self.feature_cols = [c for c in self.dataframe.columns if c not in metadata_cols]
-        
-        # Group by HDF5 file to minimize file opening overhead
-        # Structure: {file_path: [row_indices]}
-        # We can't easily change __getitem__ to batch by file unless we use a custom sampler.
-        # But we can at least cache the file handle if we assume sequential access (using a custom worker_init_fn or careful caching).
-        # HOWEVER, PyTorch DataLoader workers are separate processes.
-        # Simple optimization: Cache a few opened file handles (LRU per worker).
+
+        # LRU cache for file handles (per worker process)
         self._file_cache = {}
         self._file_cache_order = deque()
 
-        # Pre-resolve file paths and segment paths to reduce per-sample overhead
-        # For very large datasets, skip pre-resolve to avoid long startup time
-        self._check_exists = len(self.dataframe) <= 50000
-        self._pre_resolve = len(self.dataframe) <= 200000
+        # OPTIMIZATION: Use lazy loading by default - skip slow pre-resolution
+        # Pre-resolution with iterrows() is extremely slow for large datasets
+        self._skip_pre_resolve = skip_pre_resolve
+        self._skip_existence_check = skip_existence_check
 
         self._resolved_file_paths = None
         self._resolved_segment_paths = None
+        self._missing_count = None
 
-        if self._pre_resolve:
-            self._resolved_file_paths = []
-            self._resolved_segment_paths = []
-            self._missing_file_indices = set()
+        # Pre-extract source_file and source_segments columns as numpy arrays for fast access
+        self._source_files = self.dataframe['source_file'].values if 'source_file' in self.dataframe.columns else None
+        self._source_segments = self.dataframe['source_segments'].values if 'source_segments' in self.dataframe.columns else None
+        self._dataset_sources = self.dataframe['dataset_source'].values if 'dataset_source' in self.dataframe.columns else None
 
-            for idx, row in self.dataframe.iterrows():
-                file_path = self._resolve_file_path(row, check_exists=self._check_exists)
-                if file_path is None or (self._check_exists and not file_path.exists()):
-                    self._missing_file_indices.add(idx)
-                    self._resolved_file_paths.append(None)
-                else:
-                    self._resolved_file_paths.append(file_path)
-
-                seg_path = self._parse_segment_path(row)
-                self._resolved_segment_paths.append(seg_path)
-            self._missing_count = len(self._missing_file_indices)
-        else:
-            self._missing_count = None
+        # Pre-extract feature values as numpy array for fast access
+        self._feature_values = self.dataframe[self.feature_cols].values.astype(np.float32)
+        # Clean NaN/Inf values once upfront
+        self._feature_values = np.nan_to_num(self._feature_values, nan=0.0, posinf=0.0, neginf=0.0)
         
     def __len__(self):
         return len(self.dataframe)
@@ -214,46 +214,77 @@ class FeaturePredictionDataset(Dataset):
         return self._missing_count
 
     def get_file_path(self, idx):
-        if self._resolved_file_paths is None:
-            row = self.dataframe.iloc[idx]
-            return self._resolve_file_path(row, check_exists=False)
-        return self._resolved_file_paths[idx]
+        if self._resolved_file_paths is not None:
+            return self._resolved_file_paths[idx]
+        # Use fast method with pre-extracted arrays
+        file_name = self._source_files[idx] if self._source_files is not None else None
+        dataset_source = self._dataset_sources[idx] if self._dataset_sources is not None else None
+        return self._resolve_file_path_fast(file_name, dataset_source, check_exists=False)
 
     def get_segment_path(self, idx):
-        if self._resolved_segment_paths is None:
-            row = self.dataframe.iloc[idx]
-            return self._parse_segment_path(row)
-        return self._resolved_segment_paths[idx]
+        if self._resolved_segment_paths is not None:
+            return self._resolved_segment_paths[idx]
+        # Use fast method with pre-extracted arrays
+        segment_str = self._source_segments[idx] if self._source_segments is not None else None
+        return self._parse_segment_path_fast(segment_str)
+
+    def _parse_segment_path_fast(self, segment_path_str):
+        """Fast segment path parsing without ast.literal_eval."""
+        if segment_path_str is None or (isinstance(segment_path_str, float) and np.isnan(segment_path_str)):
+            return None
+
+        segment_path_str = str(segment_path_str)
+
+        # Fast path: if it doesn't start with '[', it's already a simple path
+        if not segment_path_str.startswith('['):
+            return segment_path_str.strip()
+
+        # Extract first element from list-like string: "['trial0/segment0', ...]" -> "trial0/segment0"
+        # This is faster than ast.literal_eval for simple cases
+        try:
+            # Remove brackets and split
+            inner = segment_path_str.strip()[1:-1]  # Remove [ and ]
+            if not inner:
+                return None
+            # Find first element (before first comma if exists)
+            first_elem = inner.split(',')[0].strip()
+            # Remove quotes
+            first_elem = first_elem.strip("'\"")
+            return first_elem
+        except Exception:
+            # Fallback to original method
+            try:
+                segment_list = ast.literal_eval(segment_path_str)
+                if isinstance(segment_list, list) and len(segment_list) > 0:
+                    return segment_list[0]
+                return str(segment_list)
+            except Exception:
+                return segment_path_str.replace('[', '').replace(']', '').replace("'", "").replace('"', '')
 
     def _parse_segment_path(self, row):
         if 'source_segments' not in row.index:
             return None
-        segment_path_str = row['source_segments']
+        return self._parse_segment_path_fast(row['source_segments'])
 
-        try:
-            segment_list = ast.literal_eval(segment_path_str)
-            if isinstance(segment_list, list) and len(segment_list) > 0:
-                return segment_list[0]
-            return str(segment_list)
-        except Exception:
-            return segment_path_str.replace('[', '').replace(']', '').replace("'", "").replace('"', '')
+    def _resolve_file_path_fast(self, file_name, dataset_source=None, check_exists=False):
+        """Fast file path resolution using raw values instead of row objects."""
+        if file_name is None:
+            return None
 
-    def _resolve_file_path(self, row, check_exists=True):
-        file_name = row['source_file']
-        dataset_source = row['dataset_source'] if 'dataset_source' in row.index else None
         dataset_key = _normalize_dataset_key(dataset_source)
 
         hdf5_root = self.hdf5_root
         if self.hdf5_root_map and dataset_key in self.hdf5_root_map:
             hdf5_root = self.hdf5_root_map[dataset_key]
 
-        if Path(file_name).is_absolute():
-            file_path = Path(file_name)
+        file_name_str = str(file_name)
+        if Path(file_name_str).is_absolute():
+            file_path = Path(file_name_str)
         else:
             if hdf5_root is None:
-                file_path = Path(file_name)
+                file_path = Path(file_name_str)
             else:
-                file_path = hdf5_root / file_name
+                file_path = hdf5_root / file_name_str
 
         if not check_exists:
             return file_path
@@ -262,35 +293,42 @@ class FeaturePredictionDataset(Dataset):
             return file_path
 
         if hdf5_root is not None and dataset_source:
-            alt_path = hdf5_root / str(dataset_source) / file_name
-            if not check_exists or alt_path.exists():
+            alt_path = hdf5_root / str(dataset_source) / file_name_str
+            if alt_path.exists():
                 return alt_path
 
         if hdf5_root is not None:
-            alt_path = hdf5_root / "TUAB" / file_name
-            if not check_exists or alt_path.exists():
+            alt_path = hdf5_root / "TUAB" / file_name_str
+            if alt_path.exists():
                 return alt_path
 
         return None
+
+    def _resolve_file_path(self, row, check_exists=True):
+        file_name = row['source_file']
+        dataset_source = row['dataset_source'] if 'dataset_source' in row.index else None
+        return self._resolve_file_path_fast(file_name, dataset_source, check_exists)
         
     def __getitem__(self, idx):
-        row = self.dataframe.iloc[idx]
+        # OPTIMIZATION: Use pre-extracted arrays instead of dataframe.iloc[idx]
+        # This avoids slow pandas row access
+        file_name = self._source_files[idx] if self._source_files is not None else None
+        segment_str = self._source_segments[idx] if self._source_segments is not None else None
+        dataset_source = self._dataset_sources[idx] if self._dataset_sources is not None else None
 
-        if self._resolved_file_paths is None or self._resolved_segment_paths is None:
-            file_path = self._resolve_file_path(row, check_exists=False)
-            segment_path = self._parse_segment_path(row)
-        else:
-            file_path = self._resolved_file_paths[idx]
-            segment_path = self._resolved_segment_paths[idx]
+        # Resolve paths using fast methods
+        file_path = self._resolve_file_path_fast(file_name, dataset_source, check_exists=False)
+        segment_path = self._parse_segment_path_fast(segment_str)
 
         if file_path is None or segment_path is None:
-            return torch.zeros((21, self.window_size)), torch.zeros(len(self.feature_cols))
-        
+            return torch.zeros((len(standard_1020), self.window_size)), torch.zeros(len(self.feature_cols))
+
         try:
             # LRU cache for file handles (per worker)
             file_path_str = str(file_path)
             if self.cache_size > 0 and file_path_str in self._file_cache:
                 f = self._file_cache[file_path_str]
+                # Move to end of LRU order
                 if file_path_str in self._file_cache_order:
                     self._file_cache_order.remove(file_path_str)
                 self._file_cache_order.append(file_path_str)
@@ -309,18 +347,17 @@ class FeaturePredictionDataset(Dataset):
                                 pass
 
             # segment_path e.g. "trial0/segment10"
-            # split by /
             parts = segment_path.split('/')
             obj = f
             for part in parts:
                 obj = obj[part]
-            
-            # Now obj should be the group containing 'eeg'
+
+            # Read EEG data
             data = obj['eeg'][()]
             # Sanitize NaN/Inf early
             if isinstance(data, np.ndarray):
                 data = np.nan_to_num(data, nan=0.0, posinf=0.0, neginf=0.0)
-            
+
             # Standardize channels
             ch_names = None
             if 'chn_name' in f.attrs:
@@ -329,47 +366,42 @@ class FeaturePredictionDataset(Dataset):
                 ch_names = f.attrs['chOrder']
             elif 'chOrder' in obj['eeg'].attrs:
                 ch_names = obj['eeg'].attrs['chOrder']
-            
+
             if ch_names is not None:
                 new_data = np.zeros((len(standard_1020), data.shape[1]), dtype=data.dtype)
-                
+
                 if len(ch_names) > 0 and isinstance(ch_names[0], bytes):
                     ch_names = [c.decode('utf-8') for c in ch_names]
-                
+
                 for i, ch in enumerate(ch_names):
                     ch = ch.upper().strip()
                     if ch in standard_1020:
-                        idx = standard_1020.index(ch)
-                        new_data[idx] = data[i]
+                        ch_idx = standard_1020.index(ch)
+                        new_data[ch_idx] = data[i]
                 data = new_data
             else:
                 new_data = np.zeros((len(standard_1020), data.shape[1]), dtype=data.dtype)
-                # print(f"Warning: No channel info for {file_path}")
                 data = new_data
-            
-            # data shape (21, 2000)
-            # Crop to window_size (1600)
+
+            # Crop or pad to window_size
             if data.shape[1] > self.window_size:
                 start = np.random.randint(0, data.shape[1] - self.window_size + 1)
-                data = data[:, start:start+self.window_size]
+                data = data[:, start:start + self.window_size]
             elif data.shape[1] < self.window_size:
                 pad_len = self.window_size - data.shape[1]
-                data = np.pad(data, ((0,0), (0, pad_len)), 'constant')
-                
-            data = torch.FloatTensor(data)
+                data = np.pad(data, ((0, 0), (0, pad_len)), 'constant')
+
+            data = torch.from_numpy(data).float()
             data = torch.nan_to_num(data, nan=0.0, posinf=0.0, neginf=0.0)
-            
-            # Features
-            features = row[self.feature_cols].values.astype(np.float32)
-            features = np.nan_to_num(features, nan=0.0, posinf=0.0, neginf=0.0)
-            features = torch.FloatTensor(features)
-            features = torch.nan_to_num(features, nan=0.0, posinf=0.0, neginf=0.0)
-            
+
+            # OPTIMIZATION: Use pre-extracted feature values
+            features = torch.from_numpy(self._feature_values[idx].copy()).float()
+
             return data, features
-            
+
         except Exception as e:
             print(f"Error loading {file_path} {segment_path}: {e}")
-            return torch.zeros((21, self.window_size)), torch.zeros(len(self.feature_cols))
+            return torch.zeros((len(standard_1020), self.window_size)), torch.zeros(len(self.feature_cols))
     
     def __del__(self):
         try:

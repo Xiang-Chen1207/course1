@@ -16,6 +16,7 @@ from typing import Iterable
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
+from tqdm import tqdm
 
 import utils
 from einops import rearrange
@@ -69,11 +70,24 @@ def train_one_epoch(model: torch.nn.Module, vqnsp: torch.nn.Module,
     loss_fn = nn.CrossEntropyLoss()
 
     step_loader = 0
+    total_batches = sum(len(dl) for dl in data_loader_list)
+
     for data_loader, ch_names in zip(data_loader_list, ch_names_list):
         if len(data_loader) == 0:
             continue
         input_chans = utils.get_input_chans(ch_names)
-        for step, (batch) in enumerate(metric_logger.log_every(data_loader, print_freq * args.gradient_accumulation_steps, header)):
+
+        # Use tqdm progress bar for training
+        pbar = tqdm(
+            enumerate(data_loader),
+            total=len(data_loader),
+            desc=f"Epoch {epoch}",
+            disable=not utils.is_main_process(),
+            ncols=120,
+            bar_format='{l_bar}{bar}| {n_fmt}/{total_fmt} [{elapsed}<{remaining}, {rate_fmt}] {postfix}'
+        )
+
+        for step, batch in pbar:
             # assign learning rate & weight decay for each step
             it = start_steps + step + step_loader  # global training iteration
             if lr_schedule_values is not None or wd_schedule_values is not None:
@@ -167,6 +181,13 @@ def train_one_epoch(model: torch.nn.Module, vqnsp: torch.nn.Module,
                     weight_decay_value = group["weight_decay"]
             metric_logger.update(weight_decay=weight_decay_value)
             metric_logger.update(grad_norm=grad_norm)
+
+            # Update progress bar with current metrics
+            pbar.set_postfix({
+                'loss': f'{loss_value:.4f}',
+                'acc': f'{mlm_acc:.3f}',
+                'lr': f'{max_lr:.2e}'
+            })
 
             if log_writer is not None:
                 log_writer.update(loss=loss_value, head="loss")
