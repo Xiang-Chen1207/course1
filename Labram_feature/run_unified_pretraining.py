@@ -327,6 +327,9 @@ def get_args():
     parser.add_argument('--debug_data', action='store_true', help='Print detailed data loading debug info and verify first batch')
     parser.add_argument('--dataset_name', default=None, type=str,
                         help='Process only one dataset (e.g., TUAB, ADHD). Ignored if --csv_path is set.')
+    parser.add_argument('--h5_cache_size', default=32, type=int,
+                        help='Number of HDF5 files to cache (LRU). Larger = fewer file open/close ops. '
+                             'Recommended: 32-64 for slow IO, 16 for fast SSD.')
 
     return parser.parse_args()
 
@@ -435,20 +438,22 @@ def main(args):
     test_df = merged_df[merged_df['sub_id'].isin(test_subs)]
     
     log("Building datasets...")
-    # Increase cache_size for better HDF5 file reuse, skip expensive pre-resolution checks
+    # Use larger cache_size (32-64) for better HDF5 file reuse on slow IO systems
+    # This reduces file open/close overhead significantly
+    h5_cache_size = getattr(args, 'h5_cache_size', 32)
     dataset_train = FeaturePredictionDataset(
         train_df, hdf5_root=args.hdf5_root, window_size=args.input_size,
-        cache_size=8, hdf5_root_map=hdf5_root_map,
+        cache_size=h5_cache_size, hdf5_root_map=hdf5_root_map,
         skip_pre_resolve=True, skip_existence_check=True
     )
     dataset_val = FeaturePredictionDataset(
         val_df, hdf5_root=args.hdf5_root, window_size=args.input_size,
-        cache_size=8, hdf5_root_map=hdf5_root_map,
+        cache_size=h5_cache_size, hdf5_root_map=hdf5_root_map,
         skip_pre_resolve=True, skip_existence_check=True
     )
     dataset_test = FeaturePredictionDataset(
         test_df, hdf5_root=args.hdf5_root, window_size=args.input_size,
-        cache_size=8, hdf5_root_map=hdf5_root_map,
+        cache_size=h5_cache_size, hdf5_root_map=hdf5_root_map,
         skip_pre_resolve=True, skip_existence_check=True
     )
     

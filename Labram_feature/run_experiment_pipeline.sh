@@ -45,6 +45,11 @@ DEBUG_DATA=${DEBUG_DATA:-1}
 # DataLoader workers (set to 0 to avoid HDF5 multiprocessing hangs)
 NUM_WORKERS=${NUM_WORKERS:-0}
 
+# HDF5 file cache size (LRU). Larger = fewer file open/close operations.
+# Increase this for slow IO systems (e.g., network storage, HDD)
+# Recommended: 32-64 for slow IO, 16 for fast SSD
+H5_CACHE_SIZE=${H5_CACHE_SIZE:-32}
+
 # Master ports (auto-pick if empty)
 MASTER_PORT_PRETRAIN=${MASTER_PORT_PRETRAIN:-$((29500 + RANDOM % 2000))}
 MASTER_PORT_FEATURE=${MASTER_PORT_FEATURE:-$((29500 + RANDOM % 2000))}
@@ -99,6 +104,7 @@ for DATASET_NAME in $PRETRAIN_DATASET_LIST; do
             --csv_path $DATA_CSV \
             --batch_size $BATCH_SIZE \
             --num_workers $NUM_WORKERS \
+            --h5_cache_size $H5_CACHE_SIZE \
             --lr $LR \
             --clip_grad 3.0 \
             --epochs 100 \
@@ -113,6 +119,7 @@ for DATASET_NAME in $PRETRAIN_DATASET_LIST; do
         --csv_path $DATA_CSV \
         --batch_size $BATCH_SIZE \
         --num_workers $NUM_WORKERS \
+        --h5_cache_size $H5_CACHE_SIZE \
         --lr $LR \
         --clip_grad 3.0 \
         --epochs 100 \
@@ -133,6 +140,7 @@ for DATASET_NAME in $PRETRAIN_DATASET_LIST; do
             --csv_path $DATA_CSV \
             --batch_size $BATCH_SIZE \
             --num_workers $NUM_WORKERS \
+            --h5_cache_size $H5_CACHE_SIZE \
             --epochs 100 \
             --save_ckpt_freq 20 \
             $( [ "$DEBUG_DATA" = "1" ] && echo "--debug_data" )
@@ -145,6 +153,7 @@ for DATASET_NAME in $PRETRAIN_DATASET_LIST; do
         --csv_path $DATA_CSV \
         --batch_size $BATCH_SIZE \
         --num_workers $NUM_WORKERS \
+        --h5_cache_size $H5_CACHE_SIZE \
         --epochs 100 \
         --save_ckpt_freq 20 \
         $( [ "$DEBUG_DATA" = "1" ] && echo "--debug_data" )

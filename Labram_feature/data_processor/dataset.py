@@ -156,16 +156,17 @@ class ShockDataset(Dataset):
 
 
 class FeaturePredictionDataset(Dataset):
-    def __init__(self, dataframe, hdf5_root, window_size=1600, cache_size=4, hdf5_root_map=None,
+    def __init__(self, dataframe, hdf5_root, window_size=1600, cache_size=32, hdf5_root_map=None,
                  skip_pre_resolve=True, skip_existence_check=True):
         """
-        Optimized dataset for feature prediction.
+        Optimized dataset for feature prediction with lazy HDF5 file loading.
 
         Args:
             dataframe: DataFrame with feature data and file metadata
             hdf5_root: Root directory for HDF5 files
             window_size: Size of EEG window to extract
-            cache_size: Number of HDF5 files to cache (LRU)
+            cache_size: Number of HDF5 files to cache (LRU). Larger = fewer file open/close ops.
+                       Recommended: 32-64 for better IO performance on slow storage.
             hdf5_root_map: Optional dict mapping dataset names to HDF5 roots
             skip_pre_resolve: If True, skip slow pre-resolution of paths (recommended for large datasets)
             skip_existence_check: If True, skip file existence checks during init (recommended)
@@ -173,6 +174,7 @@ class FeaturePredictionDataset(Dataset):
         self.dataframe = dataframe.reset_index(drop=True)
         self.hdf5_root = Path(hdf5_root) if hdf5_root else None
         self.window_size = window_size
+        # Increase default cache_size for better IO performance on slow storage
         self.cache_size = max(int(cache_size), 0)
         self.hdf5_root_map = None
         if hdf5_root_map:
@@ -328,13 +330,17 @@ class FeaturePredictionDataset(Dataset):
 
         try:
             # LRU cache for file handles using OrderedDict for O(1) operations
+            # This avoids repeatedly opening/closing .h5 files which is expensive on slow IO
             file_path_str = str(file_path)
             if self.cache_size > 0 and file_path_str in self._file_cache:
                 f = self._file_cache[file_path_str]
                 # Move to end (most recently used) - O(1) operation
                 self._file_cache.move_to_end(file_path_str)
             else:
-                f = h5py.File(file_path, 'r')
+                # Open file with 'r' mode and optionally use rdcc (chunk cache) for better read perf
+                # rdcc_nbytes: chunk cache size (default ~1MB, increase for better sequential reads)
+                # rdcc_nslots: hash table slots for chunk cache
+                f = h5py.File(file_path, 'r', rdcc_nbytes=4*1024*1024, rdcc_nslots=10007)
                 if self.cache_size > 0:
                     self._file_cache[file_path_str] = f
                     # Evict oldest if over capacity
