@@ -1,6 +1,9 @@
 
 #!/bin/bash
 
+# Force unbuffered Python output for real-time training logs
+export PYTHONUNBUFFERED=1
+
 # Configuration
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PRETRAIN_SCRIPT="$SCRIPT_DIR/run_unified_pretraining.py"
