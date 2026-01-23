@@ -1,0 +1,384 @@
+/mnt/cx/EEG_text/raw_data/SEEDVII_emo_fast/sub_1/merged_segment_3204.csv
+OSError: [Errno 28] No space left on device
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/mnt/cx/EEG_text/merged_segment_extraction.py", line 234, in _process_merged_segment_task
+    df.to_csv(output_path, index=False, encoding='utf-8')
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/util/_decorators.py", line 211, in wrapper
+    return func(*args, **kwargs)
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/core/generic.py", line 3720, in to_csv
+    return DataFrameRenderer(formatter).to_csv(
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/util/_decorators.py", line 211, in wrapper
+    return func(*args, **kwargs)
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/formats/format.py", line 1189, in to_csv
+    csv_formatter.save()
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/formats/csvs.py", line 241, in save
+    with get_handle(
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/common.py", line 133, in __exit__
+    self.close()
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/common.py", line 125, in close
+    handle.close()
+OSError: [Errno 28] No space left on device
+--------------------------------------------------------------------------------
+/mnt/cx/EEG_text/raw_data/SEEDVII_emo_fast/sub_1/merged_segment_3206.csv
+OSError: [Errno 28] No space left on device
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/mnt/cx/EEG_text/merged_segment_extraction.py", line 234, in _process_merged_segment_task
+    df.to_csv(output_path, index=False, encoding='utf-8')
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/util/_decorators.py", line 211, in wrapper
+    return func(*args, **kwargs)
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/core/generic.py", line 3720, in to_csv
+    return DataFrameRenderer(formatter).to_csv(
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/util/_decorators.py", line 211, in wrapper
+    return func(*args, **kwargs)
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/formats/format.py", line 1189, in to_csv
+    csv_formatter.save()
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/formats/csvs.py", line 241, in save
+    with get_handle(
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/common.py", line 133, in __exit__
+    self.close()
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/common.py", line 125, in close
+    handle.close()
+OSError: [Errno 28] No space left on device
+--------------------------------------------------------------------------------
+/mnt/cx/EEG_text/raw_data/SEEDVII_emo_fast/sub_1/merged_segment_3201.csv
+OSError: [Errno 28] No space left on device
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/mnt/cx/EEG_text/merged_segment_extraction.py", line 234, in _process_merged_segment_task
+    df.to_csv(output_path, index=False, encoding='utf-8')
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/util/_decorators.py", line 211, in wrapper
+    return func(*args, **kwargs)
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/core/generic.py", line 3720, in to_csv
+    return DataFrameRenderer(formatter).to_csv(
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/util/_decorators.py", line 211, in wrapper
+    return func(*args, **kwargs)
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/formats/format.py", line 1189, in to_csv
+    csv_formatter.save()
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/formats/csvs.py", line 241, in save
+    with get_handle(
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/common.py", line 133, in __exit__
+    self.close()
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/common.py", line 125, in close
+    handle.close()
+OSError: [Errno 28] No space left on device
+--------------------------------------------------------------------------------
+/mnt/cx/EEG_text/raw_data/SEEDVII_emo_fast/sub_1/merged_segment_3203.csv
+OSError: [Errno 28] No space left on device
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/mnt/cx/EEG_text/merged_segment_extraction.py", line 234, in _process_merged_segment_task
+    df.to_csv(output_path, index=False, encoding='utf-8')
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/util/_decorators.py", line 211, in wrapper
+    return func(*args, **kwargs)
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/core/generic.py", line 3720, in to_csv
+    return DataFrameRenderer(formatter).to_csv(
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/util/_decorators.py", line 211, in wrapper
+    return func(*args, **kwargs)
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/formats/format.py", line 1189, in to_csv
+    csv_formatter.save()
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/formats/csvs.py", line 241, in save
+    with get_handle(
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/common.py", line 133, in __exit__
+    self.close()
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/common.py", line 125, in close
+    handle.close()
+OSError: [Errno 28] No space left on device
+--------------------------------------------------------------------------------
+/mnt/cx/EEG_text/raw_data/SEEDVII_emo_fast/sub_1/merged_segment_3205.csv
+OSError: [Errno 28] No space left on device
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/mnt/cx/EEG_text/merged_segment_extraction.py", line 234, in _process_merged_segment_task
+    df.to_csv(output_path, index=False, encoding='utf-8')
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/util/_decorators.py", line 211, in wrapper
+    return func(*args, **kwargs)
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/core/generic.py", line 3720, in to_csv
+    return DataFrameRenderer(formatter).to_csv(
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/util/_decorators.py", line 211, in wrapper
+    return func(*args, **kwargs)
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/formats/format.py", line 1189, in to_csv
+    csv_formatter.save()
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/formats/csvs.py", line 241, in save
+    with get_handle(
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/common.py", line 133, in __exit__
+    self.close()
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/common.py", line 125, in close
+    handle.close()
+OSError: [Errno 28] No space left on device
+--------------------------------------------------------------------------------
+/mnt/cx/EEG_text/raw_data/SEEDVII_emo_fast/sub_1/merged_segment_3207.csv
+OSError: [Errno 28] No space left on device
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/mnt/cx/EEG_text/merged_segment_extraction.py", line 234, in _process_merged_segment_task
+    df.to_csv(output_path, index=False, encoding='utf-8')
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/util/_decorators.py", line 211, in wrapper
+    return func(*args, **kwargs)
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/core/generic.py", line 3720, in to_csv
+    return DataFrameRenderer(formatter).to_csv(
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/util/_decorators.py", line 211, in wrapper
+    return func(*args, **kwargs)
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/formats/format.py", line 1189, in to_csv
+    csv_formatter.save()
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/formats/csvs.py", line 241, in save
+    with get_handle(
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/common.py", line 133, in __exit__
+    self.close()
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/common.py", line 125, in close
+    handle.close()
+OSError: [Errno 28] No space left on device
+--------------------------------------------------------------------------------
+/mnt/cx/EEG_text/raw_data/SEEDVII_emo_fast/sub_1/merged_segment_3211.csv
+OSError: [Errno 28] No space left on device
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/mnt/cx/EEG_text/merged_segment_extraction.py", line 234, in _process_merged_segment_task
+    df.to_csv(output_path, index=False, encoding='utf-8')
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/util/_decorators.py", line 211, in wrapper
+    return func(*args, **kwargs)
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/core/generic.py", line 3720, in to_csv
+    return DataFrameRenderer(formatter).to_csv(
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/util/_decorators.py", line 211, in wrapper
+    return func(*args, **kwargs)
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/formats/format.py", line 1189, in to_csv
+    csv_formatter.save()
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/formats/csvs.py", line 241, in save
+    with get_handle(
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/common.py", line 133, in __exit__
+    self.close()
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/common.py", line 125, in close
+    handle.close()
+OSError: [Errno 28] No space left on device
+--------------------------------------------------------------------------------
+/mnt/cx/EEG_text/raw_data/SEEDVII_emo_fast/sub_1/merged_segment_3209.csv
+OSError: [Errno 28] No space left on device
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/mnt/cx/EEG_text/merged_segment_extraction.py", line 234, in _process_merged_segment_task
+    df.to_csv(output_path, index=False, encoding='utf-8')
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/util/_decorators.py", line 211, in wrapper
+    return func(*args, **kwargs)
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/core/generic.py", line 3720, in to_csv
+    return DataFrameRenderer(formatter).to_csv(
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/util/_decorators.py", line 211, in wrapper
+    return func(*args, **kwargs)
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/formats/format.py", line 1189, in to_csv
+    csv_formatter.save()
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/formats/csvs.py", line 241, in save
+    with get_handle(
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/common.py", line 133, in __exit__
+    self.close()
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/common.py", line 125, in close
+    handle.close()
+OSError: [Errno 28] No space left on device
+--------------------------------------------------------------------------------
+/mnt/cx/EEG_text/raw_data/SEEDVII_emo_fast/sub_1/merged_segment_3210.csv
+OSError: [Errno 28] No space left on device
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/mnt/cx/EEG_text/merged_segment_extraction.py", line 234, in _process_merged_segment_task
+    df.to_csv(output_path, index=False, encoding='utf-8')
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/util/_decorators.py", line 211, in wrapper
+    return func(*args, **kwargs)
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/core/generic.py", line 3720, in to_csv
+    return DataFrameRenderer(formatter).to_csv(
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/util/_decorators.py", line 211, in wrapper
+    return func(*args, **kwargs)
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/formats/format.py", line 1189, in to_csv
+    csv_formatter.save()
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/formats/csvs.py", line 241, in save
+    with get_handle(
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/common.py", line 133, in __exit__
+    self.close()
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/common.py", line 125, in close
+    handle.close()
+OSError: [Errno 28] No space left on device
+--------------------------------------------------------------------------------
+/mnt/cx/EEG_text/raw_data/SEEDVII_emo_fast/sub_1/merged_segment_3208.csv
+OSError: [Errno 28] No space left on device
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/mnt/cx/EEG_text/merged_segment_extraction.py", line 234, in _process_merged_segment_task
+    df.to_csv(output_path, index=False, encoding='utf-8')
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/util/_decorators.py", line 211, in wrapper
+    return func(*args, **kwargs)
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/core/generic.py", line 3720, in to_csv
+    return DataFrameRenderer(formatter).to_csv(
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/util/_decorators.py", line 211, in wrapper
+    return func(*args, **kwargs)
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/formats/format.py", line 1189, in to_csv
+    csv_formatter.save()
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/formats/csvs.py", line 241, in save
+    with get_handle(
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/common.py", line 133, in __exit__
+    self.close()
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/common.py", line 125, in close
+    handle.close()
+OSError: [Errno 28] No space left on device
+--------------------------------------------------------------------------------
+/mnt/cx/EEG_text/raw_data/SEEDVII_emo_fast/sub_1/merged_segment_3212.csv
+OSError: [Errno 28] No space left on device
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/mnt/cx/EEG_text/merged_segment_extraction.py", line 234, in _process_merged_segment_task
+    df.to_csv(output_path, index=False, encoding='utf-8')
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/util/_decorators.py", line 211, in wrapper
+    return func(*args, **kwargs)
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/core/generic.py", line 3720, in to_csv
+    return DataFrameRenderer(formatter).to_csv(
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/util/_decorators.py", line 211, in wrapper
+    return func(*args, **kwargs)
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/formats/format.py", line 1189, in to_csv
+    csv_formatter.save()
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/formats/csvs.py", line 241, in save
+    with get_handle(
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/common.py", line 133, in __exit__
+    self.close()
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/common.py", line 125, in close
+    handle.close()
+OSError: [Errno 28] No space left on device
+--------------------------------------------------------------------------------
+/mnt/cx/EEG_text/raw_data/SEEDVII_emo_fast/sub_1/merged_segment_3214.csv
+OSError: [Errno 28] No space left on device
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/mnt/cx/EEG_text/merged_segment_extraction.py", line 234, in _process_merged_segment_task
+    df.to_csv(output_path, index=False, encoding='utf-8')
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/util/_decorators.py", line 211, in wrapper
+    return func(*args, **kwargs)
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/core/generic.py", line 3720, in to_csv
+    return DataFrameRenderer(formatter).to_csv(
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/util/_decorators.py", line 211, in wrapper
+    return func(*args, **kwargs)
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/formats/format.py", line 1189, in to_csv
+    csv_formatter.save()
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/formats/csvs.py", line 241, in save
+    with get_handle(
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/common.py", line 133, in __exit__
+    self.close()
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/common.py", line 125, in close
+    handle.close()
+OSError: [Errno 28] No space left on device
+--------------------------------------------------------------------------------
+/mnt/cx/EEG_text/raw_data/SEEDVII_emo_fast/sub_1/merged_segment_3215.csv
+OSError: [Errno 28] No space left on device
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/mnt/cx/EEG_text/merged_segment_extraction.py", line 234, in _process_merged_segment_task
+    df.to_csv(output_path, index=False, encoding='utf-8')
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/util/_decorators.py", line 211, in wrapper
+    return func(*args, **kwargs)
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/core/generic.py", line 3720, in to_csv
+    return DataFrameRenderer(formatter).to_csv(
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/util/_decorators.py", line 211, in wrapper
+    return func(*args, **kwargs)
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/formats/format.py", line 1189, in to_csv
+    csv_formatter.save()
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/formats/csvs.py", line 241, in save
+    with get_handle(
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/common.py", line 133, in __exit__
+    self.close()
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/common.py", line 125, in close
+    handle.close()
+OSError: [Errno 28] No space left on device
+--------------------------------------------------------------------------------
+/mnt/cx/EEG_text/raw_data/SEEDVII_emo_fast/sub_1/merged_segment_3216.csv
+OSError: [Errno 28] No space left on device
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/mnt/cx/EEG_text/merged_segment_extraction.py", line 234, in _process_merged_segment_task
+    df.to_csv(output_path, index=False, encoding='utf-8')
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/util/_decorators.py", line 211, in wrapper
+    return func(*args, **kwargs)
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/core/generic.py", line 3720, in to_csv
+    return DataFrameRenderer(formatter).to_csv(
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/util/_decorators.py", line 211, in wrapper
+    return func(*args, **kwargs)
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/formats/format.py", line 1189, in to_csv
+    csv_formatter.save()
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/formats/csvs.py", line 241, in save
+    with get_handle(
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/common.py", line 133, in __exit__
+    self.close()
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/common.py", line 125, in close
+    handle.close()
+OSError: [Errno 28] No space left on device
+--------------------------------------------------------------------------------
+/mnt/cx/EEG_text/raw_data/SEEDVII_emo_fast/sub_1/merged_segment_3213.csv
+OSError: [Errno 28] No space left on device
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/mnt/cx/EEG_text/merged_segment_extraction.py", line 234, in _process_merged_segment_task
+    df.to_csv(output_path, index=False, encoding='utf-8')
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/util/_decorators.py", line 211, in wrapper
+    return func(*args, **kwargs)
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/core/generic.py", line 3720, in to_csv
+    return DataFrameRenderer(formatter).to_csv(
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/util/_decorators.py", line 211, in wrapper
+    return func(*args, **kwargs)
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/formats/format.py", line 1189, in to_csv
+    csv_formatter.save()
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/formats/csvs.py", line 241, in save
+    with get_handle(
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/common.py", line 133, in __exit__
+    self.close()
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/common.py", line 125, in close
+    handle.close()
+OSError: [Errno 28] No space left on device
+--------------------------------------------------------------------------------
+/mnt/cx/EEG_text/raw_data/SEEDVII_emo_fast/sub_1/merged_segment_3217.csv
+OSError: [Errno 28] No space left on device
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/mnt/cx/EEG_text/merged_segment_extraction.py", line 234, in _process_merged_segment_task
+    df.to_csv(output_path, index=False, encoding='utf-8')
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/util/_decorators.py", line 211, in wrapper
+    return func(*args, **kwargs)
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/core/generic.py", line 3720, in to_csv
+    return DataFrameRenderer(formatter).to_csv(
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/util/_decorators.py", line 211, in wrapper
+    return func(*args, **kwargs)
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/formats/format.py", line 1189, in to_csv
+    csv_formatter.save()
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/formats/csvs.py", line 241, in save
+    with get_handle(
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/common.py", line 133, in __exit__
+    self.close()
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/common.py", line 125, in close
+    handle.close()
+OSError: [Errno 28] No space left on device
+--------------------------------------------------------------------------------

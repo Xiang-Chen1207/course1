@@ -3,7 +3,7 @@ import h5py
 import numpy as np
 import sys
 
-file_path = "/mnt/dataset2/benchmark_dataloader/hdf5/TUAB/sub_aaaaaaaq.h5"
+file_path = "/vePFS-0x0d/eeg-data/TUAB/sub_aaaaaaaq.h5"
 
 try:
     with h5py.File(file_path, 'r') as f:
@@ -26,5 +26,7 @@ try:
                      print("Data shape:", f['trial0']['segment0']['data'].shape)
                  elif 'eeg' in f['trial0']['segment0']:
                      print("EEG shape:", f['trial0']['segment0']['eeg'].shape)
+                     eeg_data = f['trial0']['segment0']['eeg']
+                     print("EEG first 5 time points:", eeg_data[:, :5])
 except Exception as e:
     print(e)

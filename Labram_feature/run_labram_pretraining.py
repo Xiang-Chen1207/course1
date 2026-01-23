@@ -87,7 +87,7 @@ def get_args():
     parser.add_argument('--save_ckpt_freq', default=20, type=int)
 
     # tokenizer settings
-    parser.add_argument("--tokenizer_weight", type=str, default='/mnt/dataset4/cx/code/EEG_LLM_text/Labram_feature/checkpoints/vqnsp.pth')
+    parser.add_argument("--tokenizer_weight", type=str, default='/mnt/cx/EEG_text/Labram_feature/checkpoints/vqnsp.pth')
     parser.add_argument("--tokenizer_model", type=str, default="vqnsp_encoder_base_decoder_3x200x12")
     
     # Model parameters
@@ -174,9 +174,9 @@ def get_args():
     parser.add_argument('--rec_loss_weight', default=1.0, type=float, help='Weight for reconstruction loss')
     parser.add_argument('--reg_loss_weight', default=15.0, type=float, help='Weight for regression loss')
 
-    parser.add_argument('--csv_path', default='/mnt/dataset4/cx/code/EEG_LLM_text/TUAB_fast_elm/all_merged_features_zscored.csv', type=str,
+    parser.add_argument('--csv_path', default='/mnt/cx/EEG_text/data/TUAB.csv', type=str,
                         help='Path to the features CSV file')
-    parser.add_argument('--hdf5_root', default='/mnt/dataset2/benchmark_dataloader/hdf5', type=str,
+    parser.add_argument('--hdf5_root', default='/eeg-h5-files/TUAB', type=str,
                         help='Root directory for HDF5 files')
 
     return parser.parse_args()

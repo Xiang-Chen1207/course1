@@ -269,7 +269,7 @@ class EEGDataLoader:
         for segment_name in segment_names:
             seg_grp = trial_grp[segment_name]
             eeg_dset = seg_grp['eeg']
-            eeg_data = (eeg_dset[...] * 1e6).astype(np.float32, copy=False)
+            eeg_data = (eeg_dset[...]).astype(np.float32, copy=False)
             eeg_attrs = eeg_dset.attrs
 
             label = eeg_attrs.get('label', 0)

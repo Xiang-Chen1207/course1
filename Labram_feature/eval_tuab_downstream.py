@@ -77,8 +77,8 @@ def get_args():
     parser.add_argument('--mode', required=True, type=str, choices=['linear', 'finetune'])
     parser.add_argument('--output_dir', default='./eval_results', help='Path to save results')
     
-    parser.add_argument('--csv_path', default='/mnt/dataset4/cx/code/EEG_LLM_text/TUAB_fast_elm/all_merged_features_zscored.csv', type=str)
-    parser.add_argument('--hdf5_root', default='/mnt/dataset2/benchmark_dataloader/hdf5', type=str)
+    parser.add_argument('--csv_path', default='/mnt/cx/EEG_text/data/TUAB.csv', type=str)
+    parser.add_argument('--hdf5_root', default='/eeg-h5-files/TUAB', type=str)
     
     parser.add_argument('--model', default='labram_base_patch200_200', type=str)
     parser.add_argument('--device', default='cuda')

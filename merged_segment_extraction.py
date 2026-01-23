@@ -9,7 +9,7 @@
 - 支持多CPU并行处理
 
 使用方法：
-  python merged_segment_extraction.py -i /eeg-h5-files/SEEDVII_emo -o /mnt/cx/EEG_text/raw_data/SEEDVII_emo_fast --merge-count 1 --preset fast
+  python merged_segment_extraction.py -i /vePFS-0x0d/eeg-data/TUAB -o /vePFS-0x0d/home/cx/EEG_text/raw_data/TUAB_fastnew --merge-count 1 --preset fast --resume
   python merged_segment_extraction.py -i /pretrain-clip/hdf5_datasets/Workload_MATB -o /mnt/cx/EEG_text/raw_data/Workload_fast --merge-count 1 --preset fast
     # 每15个segment合并成1个（默认按trial内合并）
     python merged_segment_extraction.py -i /mnt/dataset2/hdf5_datasets/Workload_MATB -o /mnt/dataset4/cx/code/EEG_LLM_text/Workload_new_full --merge-count 1
@@ -111,6 +111,28 @@ def _get_optimal_n_jobs() -> int:
     return max(1, int(cpu_count * 0.50))
 
 
+def _sanitize_feature_value(val: Any) -> Any:
+    """将可能的 Index/array 等转换为可序列化标量或字符串"""
+    if isinstance(val, pd.Index):
+        val = val.tolist()
+    if isinstance(val, np.ndarray):
+        if val.size == 1:
+            try:
+                return val.item()
+            except Exception:
+                pass
+        return val.tolist()
+    if isinstance(val, (list, tuple, set)):
+        if len(val) == 1:
+            return list(val)[0]
+        return str(list(val))
+    return val
+
+
+def _sanitize_features(features: Dict[str, Any]) -> Dict[str, Any]:
+    return {k: _sanitize_feature_value(v) for k, v in features.items()}
+
+
 def _process_merged_segment_task(args: Tuple) -> Tuple[str, Optional[Dict[str, Any]], Optional[str]]:
     """
     处理单个合并后的 segment 的任务函数（用于并行处理）
@@ -188,23 +210,7 @@ def _process_merged_segment_task(args: Tuple) -> Tuple[str, Optional[Dict[str, A
         features = extractor.extract_features(merged_segment.eeg_data, microstate_analyzer=microstate_analyzer)
 
         # 将可能的 Index/array 等转换为可序列化标量或字符串，避免 pandas 写 CSV 出现 _format_native_types 错误
-        def _sanitize_value(val):
-            if isinstance(val, pd.Index):
-                val = val.tolist()
-            if isinstance(val, np.ndarray):
-                if val.size == 1:
-                    try:
-                        return val.item()
-                    except Exception:
-                        pass
-                return val.tolist()
-            if isinstance(val, (list, tuple, set)):
-                if len(val) == 1:
-                    return list(val)[0]
-                return str(list(val))
-            return val
-
-        features = {k: _sanitize_value(v) for k, v in features.items()}
+        features = _sanitize_features(features)
 
         # 添加元信息
         features['subject_id'] = merged_segment.subject_id
@@ -717,6 +723,7 @@ class MergedSegmentExtractor:
         all_results = []
         for idx, merged_seg in iterator:
             features = self.extract_features(merged_seg.eeg_data, microstate_analyzer=microstate_analyzer)
+            features = _sanitize_features(features)
 
             # 添加元信息
             features['subject_id'] = merged_seg.subject_id
@@ -775,6 +782,7 @@ class MergedSegmentExtractor:
         if self.prefetch_buffer <= 0:
             for merged_seg in iterator:
                 features = self.extract_features(merged_seg.eeg_data, microstate_analyzer=microstate_analyzer)
+                features = _sanitize_features(features)
 
                 # 添加元信息
                 features['subject_id'] = merged_seg.subject_id
@@ -819,6 +827,7 @@ class MergedSegmentExtractor:
 
                 merged_seg = item
                 features = self.extract_features(merged_seg.eeg_data, microstate_analyzer=microstate_analyzer)
+                features = _sanitize_features(features)
 
                 # 添加元信息
                 features['subject_id'] = merged_seg.subject_id

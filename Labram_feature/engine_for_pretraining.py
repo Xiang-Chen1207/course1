@@ -88,13 +88,15 @@ def train_one_epoch(model: torch.nn.Module, vqnsp: torch.nn.Module,
             if isinstance(samples, (list, tuple)) and len(samples) == 2:
                 samples, features = samples
                 features = features.to(device, non_blocking=True)
+                features = torch.nan_to_num(features, nan=0.0, posinf=0.0, neginf=0.0)
 
             samples = samples.float().to(device, non_blocking=True) / 100
+            samples = torch.nan_to_num(samples, nan=0.0, posinf=0.0, neginf=0.0)
             samples = rearrange(samples, 'B N (A T) -> B N A T', T=200)
             bool_masked_pos = random_masking(samples.flatten(1, 2), mask_ratio=0.5).to(device, non_blocking=True)
 
             with torch.no_grad():
-                with torch.cuda.amp.autocast():
+                with torch.amp.autocast("cuda"):
                     input_ids = vqnsp.get_codebook_indices(samples, input_chans)
 
                 labels = input_ids[bool_masked_pos]
@@ -102,7 +104,7 @@ def train_one_epoch(model: torch.nn.Module, vqnsp: torch.nn.Module,
 
             my_context = model.no_sync if args.distributed and (step + 1) % args.gradient_accumulation_steps != 0 else nullcontext
             with my_context():
-                with torch.cuda.amp.autocast(): # enabled=False
+                with torch.amp.autocast("cuda"):
                     outputs = model(samples, input_chans, bool_masked_pos=bool_masked_pos)
 
                     x_rec, x_rec_sym, reg_output = outputs
@@ -123,7 +125,7 @@ def train_one_epoch(model: torch.nn.Module, vqnsp: torch.nn.Module,
             loss_value = loss.item()
 
             if not math.isfinite(loss_value):
-                print(f"Loss is {loss_value}, stopping training at rank {utils.get_rank()}", force=True)
+                print(f"Loss is {loss_value}, stopping training at rank {utils.get_rank()}")
                 
                 sys.exit(1)
 

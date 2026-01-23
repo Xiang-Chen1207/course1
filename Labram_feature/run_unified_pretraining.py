@@ -25,14 +25,60 @@ from sklearn.metrics import r2_score
 
 # Dataset paths
 DATASETS = {
-    'ADHD': '/mnt/dataset4/cx/code/EEG_LLM_text/ADHD_fast/all_merged_features_zscored.csv',
-    'BCIC2A': '/mnt/dataset4/cx/code/EEG_LLM_text/BCIC2A_fast/all_merged_features_zscored.csv',
-    'SEEDIV': '/mnt/dataset4/cx/code/EEG_LLM_text/SEEDIV_fast/all_merged_features_zscored.csv',
-    'SEEDV': '/mnt/dataset4/cx/code/EEG_LLM_text/SEEDV_fast/all_merged_features_zscored.csv',
-    'SEED': '/mnt/dataset4/cx/code/EEG_LLM_text/SEED_basic/all_merged_features_zscored.csv'
+    'ADHD': '/mnt/cx/EEG_text/data/ADHD.csv',
+    'BCIC2A': '/mnt/cx/EEG_text/data/BCIC2A.csv',
+    'SEEDIV': '/mnt/cx/EEG_text/data/SEEDIV.csv',
+    'SEEDV': '/mnt/cx/EEG_text/data/SEEDV.csv',
+    'SleepEDF': '/mnt/cx/EEG_text/data/SLEEPEDF.csv',
+    'Workload_MATB': '/mnt/cx/EEG_text/data/WORKLOAD_MATB.csv',
+    'TUAB': '/mnt/cx/EEG_text/data/TUAB.csv'
 }
 
-def load_and_merge_datasets(datasets_config):
+# Default HDF5 roots per dataset
+DEFAULT_HDF5_ROOT_MAP = {
+    'ADHD': '/pretrain-clip/hdf5_datasets/ADHD',
+    'BCIC2A': '/pretrain-clip/hdf5_datasets/BCIC2A',
+    'SEEDIV': '/pretrain-clip/hdf5_datasets/SEEDIV',
+    'SEEDV': '/pretrain-clip/hdf5_datasets/SEEDV',
+    'SleepEDF': '/pretrain-clip/hdf5_datasets/SleepEDF',
+    'Workload_MATB': '/pretrain-clip/hdf5_datasets/Workload_MATB',
+    'TUAB': '/eeg-h5-files/TUAB'
+}
+
+
+def _normalize_dataset_key(name):
+    if name is None:
+        return None
+    return str(name).strip().lower()
+
+
+def _infer_dataset_name_from_path(csv_path: str) -> str:
+    try:
+        return Path(csv_path).stem
+    except Exception:
+        return ""
+
+
+def parse_hdf5_root_map(arg_value: str):
+    if not arg_value:
+        return None
+    if isinstance(arg_value, str) and arg_value.lower() in {"auto", "default"}:
+        return DEFAULT_HDF5_ROOT_MAP
+    if os.path.isfile(arg_value) and arg_value.endswith(".json"):
+        with open(arg_value, "r", encoding="utf-8") as f:
+            return json.load(f)
+    # Parse comma-separated key=path pairs
+    root_map = {}
+    for item in arg_value.split(","):
+        if not item:
+            continue
+        if "=" not in item:
+            continue
+        key, path = item.split("=", 1)
+        root_map[key.strip()] = path.strip()
+    return root_map
+
+def load_and_merge_datasets(datasets_config, allowed_datasets=None):
     all_dfs = []
     
     # Define common feature columns (intersection or union, here we assume intersection of important ones)
@@ -43,6 +89,8 @@ def load_and_merge_datasets(datasets_config):
     common_features = None
     
     for name, path in datasets_config.items():
+        if allowed_datasets is not None and name not in allowed_datasets:
+            continue
         # Check if we should load this dataset based on hdf5_root existence
         # The hdf5_root arg might point to a specific root, e.g. /mnt/dataset2/hdf5_datasets
         # We assume dataset folder structure: hdf5_root / NAME / ...
@@ -71,13 +119,6 @@ def load_and_merge_datasets(datasets_config):
             
         # Add dataset source column for tracking
         df['dataset_source'] = name
-        
-        # Fix HDF5 path (source_file) to include dataset subdirectory if needed
-        # The dataloader assumes hdf5_root / source_file. 
-        # Since datasets are in /mnt/dataset2/hdf5_datasets/NAME/..., we need to adjust source_file or hdf5_root.
-        # Better strategy: Update source_file to be relative to a common root /mnt/dataset2/hdf5_datasets/
-        # e.g. ADHD/sub_0.h5
-        df['source_file'] = name + '/' + df['source_file']
         
         # Identify feature columns (exclude metadata)
         metadata_cols = [
@@ -210,7 +251,7 @@ def get_args():
     parser.add_argument('--save_ckpt_freq', default=10, type=int)
 
     # tokenizer settings
-    parser.add_argument("--tokenizer_weight", type=str, default='/mnt/dataset4/cx/code/EEG_LLM_text/Labram_feature/checkpoints/vqnsp.pth')
+    parser.add_argument("--tokenizer_weight", type=str, default='/mnt/cx/EEG_text/Labram_feature/checkpoints/vqnsp.pth')
     parser.add_argument("--tokenizer_model", type=str, default="vqnsp_encoder_base_decoder_3x200x12")
     
     # Model parameters
@@ -267,9 +308,14 @@ def get_args():
     parser.add_argument('--rec_loss_weight', default=1.0, type=float)
     parser.add_argument('--reg_loss_weight', default=0.0, type=float, help='Set > 0 to enable feature prediction loss')
 
-    parser.add_argument('--hdf5_root', default='/mnt/dataset2/hdf5_datasets', type=str,
-                        help='Root directory for HDF5 files')
+    parser.add_argument('--hdf5_root', default='/pretrain-clip/hdf5_datasets', type=str,
+                        help='Root directory for HDF5 files (used when dataset-specific root is unavailable)')
+    parser.add_argument('--hdf5_root_map', default='auto', type=str,
+                        help='Dataset->HDF5 root map. Use "auto", a JSON file path, or "NAME=/path,..."')
     parser.add_argument('--csv_path', default=None, type=str, help='Path to single dataset CSV (overrides default multi-dataset)')
+    parser.add_argument('--debug_data', action='store_true', help='Print detailed data loading debug info and verify first batch')
+    parser.add_argument('--dataset_name', default=None, type=str,
+                        help='Process only one dataset (e.g., TUAB, ADHD). Ignored if --csv_path is set.')
 
     return parser.parse_args()
 
@@ -305,14 +351,19 @@ def main(args):
     print(args)
     device = torch.device(args.device)
 
+    prep_start = time.time()
+    def log(msg):
+        if utils.is_main_process():
+            elapsed = time.time() - prep_start
+            print(f"[prep t+{elapsed:.1f}s] {msg}")
+
     seed = args.seed + utils.get_rank()
     torch.manual_seed(seed)
     np.random.seed(seed)
     cudnn.benchmark = True
 
     # 1. Load and Merge Data
-    if utils.is_main_process():
-        print("Merging datasets...")
+    log("Starting data preparation...")
     
     # We only want to load TUAB for this specific pipeline if run_experiment_pipeline.sh is used with TUAB_CSV
     # But run_unified_pretraining.py seems to be designed for multiple datasets.
@@ -328,24 +379,32 @@ def main(args):
     # This is a mismatch. The `run_unified_pretraining.py` was likely from a different context (multi-dataset).
     # We should make `run_unified_pretraining.py` accept a csv_path arg to override.
     
+    hdf5_root_map = parse_hdf5_root_map(getattr(args, 'hdf5_root_map', None))
+    if hdf5_root_map:
+        hdf5_root_map = {_normalize_dataset_key(k): v for k, v in hdf5_root_map.items()}
+
     if hasattr(args, 'csv_path') and args.csv_path:
         # Single dataset mode (e.g. TUAB)
-        merged_df = pd.read_csv(args.csv_path)
+        log(f"Loading CSV: {args.csv_path}")
+        merged_df = pd.read_csv(args.csv_path, low_memory=False)
         if 'sub_id' not in merged_df.columns:
              merged_df['sub_id'] = merged_df['source_file'].apply(lambda x: x.split('.')[0])
-        # We assume source_file is relative to hdf5_root. 
-        # For TUAB, hdf5_root might be /mnt/dataset2/hdf5_datasets
-        # and source_file might be TUAB/sub_xxx.h5 or just sub_xxx.h5?
-        # The user script sets HDF5_ROOT="/mnt/dataset2/hdf5_datasets"
-        # If csv has "sub_xxx.h5", we need to know which subfolder.
-        # But wait, `run_labram_pretraining.py` used `/mnt/dataset2/benchmark_dataloader/hdf5`.
-        # `run_experiment_pipeline.sh` uses `/mnt/dataset2/hdf5_datasets`.
-        # Let's assume the CSV `source_file` is correct relative to `hdf5_root`.
-        
-        # If source_file doesn't have "TUAB/", we might need to add it if hdf5_root is parent.
-        # But let's trust the CSV for now.
+        if 'dataset_source' not in merged_df.columns:
+            inferred_name = _infer_dataset_name_from_path(args.csv_path)
+            merged_df['dataset_source'] = inferred_name
     else:
-        merged_df = load_and_merge_datasets(DATASETS)
+        log("Merging multiple datasets...")
+        allowed = None
+        if args.dataset_name:
+            allowed = {args.dataset_name}
+            log(f"Filtering datasets: {allowed}")
+        merged_df = load_and_merge_datasets(DATASETS, allowed_datasets=allowed)
+
+    if utils.is_main_process():
+        log(f"Merged samples: {len(merged_df)}")
+        if 'dataset_source' in merged_df.columns:
+            ds_counts = merged_df['dataset_source'].value_counts().to_dict()
+            log(f"Dataset source counts: {ds_counts}")
     
     # 2. Split (Train/Val/Test) - Subject-wise
     # Since we merged 5 datasets, we should split carefully.
@@ -364,28 +423,35 @@ def main(args):
     val_df = merged_df[merged_df['sub_id'].isin(val_subs)]
     test_df = merged_df[merged_df['sub_id'].isin(test_subs)]
     
-    dataset_train = FeaturePredictionDataset(train_df, hdf5_root=args.hdf5_root, window_size=args.input_size)
-    dataset_val = FeaturePredictionDataset(val_df, hdf5_root=args.hdf5_root, window_size=args.input_size)
-    dataset_test = FeaturePredictionDataset(test_df, hdf5_root=args.hdf5_root, window_size=args.input_size)
+    log("Building datasets...")
+    dataset_train = FeaturePredictionDataset(train_df, hdf5_root=args.hdf5_root, window_size=args.input_size, hdf5_root_map=hdf5_root_map)
+    dataset_val = FeaturePredictionDataset(val_df, hdf5_root=args.hdf5_root, window_size=args.input_size, hdf5_root_map=hdf5_root_map)
+    dataset_test = FeaturePredictionDataset(test_df, hdf5_root=args.hdf5_root, window_size=args.input_size, hdf5_root_map=hdf5_root_map)
     
     if utils.is_main_process():
-        print(f"Train samples: {len(dataset_train)} ({len(train_subs)} subs)")
-        print(f"Val samples: {len(dataset_val)} ({len(val_subs)} subs)")
-        print(f"Test samples: {len(dataset_test)} ({len(test_subs)} subs)")
+        log(f"Train samples: {len(dataset_train)} ({len(train_subs)} subs)")
+        log(f"Val samples: {len(dataset_val)} ({len(val_subs)} subs)")
+        log(f"Test samples: {len(dataset_test)} ({len(test_subs)} subs)")
+
+        missing_train = dataset_train.get_missing_count()
+        if missing_train is not None:
+            log(f"Missing HDF5 files in train (pre-resolve check): {missing_train}")
     
     num_reg_features = len(dataset_train.get_feature_names())
     if utils.is_main_process():
-        print(f"Number of regression features: {num_reg_features}")
+        log(f"Number of regression features: {num_reg_features}")
 
     dataset_train_list = [dataset_train]
     train_ch_names_list = [dataset_train.get_ch_names()]
     
     # 3. Model & Tokenizer
+    log("Creating model...")
     model = get_model(args, num_reg_features=num_reg_features)
     patch_size = model.patch_size
     args.window_size = (1, args.input_size // patch_size)
     args.patch_size = patch_size
 
+    log("Creating visual tokenizer...")
     vqnsp = get_visual_tokenizer(args).to(device)
 
     # 4. Sampler
@@ -422,6 +488,21 @@ def main(args):
             prefetch_factor=2 if args.num_workers > 0 else None,
         )
         data_loader_train_list.append(data_loader_train)
+
+    if args.debug_data and utils.is_main_process():
+        log("Debug data enabled: fetching one batch for verification...")
+        debug_loader = torch.utils.data.DataLoader(
+            dataset_train,
+            batch_size=min(2, args.batch_size),
+            shuffle=False,
+            num_workers=0,
+        )
+        batch = next(iter(debug_loader))
+        samples_dbg, feats_dbg = batch
+        log(f"Debug batch samples shape: {tuple(samples_dbg.shape)}")
+        log(f"Debug batch features shape: {tuple(feats_dbg.shape)}")
+        log(f"Debug sample[0] file: {dataset_train.get_file_path(0)}")
+        log(f"Debug sample[0] segment: {dataset_train.get_segment_path(0)}")
 
     model.to(device)
     model_without_ddp = model

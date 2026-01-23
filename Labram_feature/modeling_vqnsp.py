@@ -112,7 +112,7 @@ class VQNSP(nn.Module):
         batch_size, n, a, t = x.shape
         encoder_features = self.encoder(x, input_chans, return_patch_tokens=True)
 
-        with torch.cuda.amp.autocast(enabled=False):
+        with torch.amp.autocast("cuda", enabled=False):
             to_quantizer_features = self.encode_task_layer(encoder_features.type_as(self.encode_task_layer[-1].weight))
 
         N = to_quantizer_features.shape[1]

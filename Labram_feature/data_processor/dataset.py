@@ -24,6 +24,12 @@ standard_1020 = [
 
 list_path = List[Path]
 
+
+def _normalize_dataset_key(name):
+    if name is None:
+        return None
+    return str(name).strip().lower()
+
 class SingleShockDataset(Dataset):
     """Read single hdf5 file regardless of label, subject, and paradigm."""
     def __init__(self, file_path: Path, window_size: int=200, stride_size: int=1, start_percentage: float=0, end_percentage: float=1):
@@ -146,11 +152,16 @@ class ShockDataset(Dataset):
 
 
 class FeaturePredictionDataset(Dataset):
-    def __init__(self, dataframe, hdf5_root, window_size=1600, cache_size=4):
+    def __init__(self, dataframe, hdf5_root, window_size=1600, cache_size=4, hdf5_root_map=None):
         self.dataframe = dataframe.reset_index(drop=True)
-        self.hdf5_root = Path(hdf5_root)
+        self.hdf5_root = Path(hdf5_root) if hdf5_root else None
         self.window_size = window_size
         self.cache_size = max(int(cache_size), 0)
+        self.hdf5_root_map = None
+        if hdf5_root_map:
+            self.hdf5_root_map = {
+                _normalize_dataset_key(k): Path(v) for k, v in hdf5_root_map.items()
+            }
         
         # Identify feature columns
         metadata_cols = [
@@ -168,34 +179,112 @@ class FeaturePredictionDataset(Dataset):
         # Simple optimization: Cache a few opened file handles (LRU per worker).
         self._file_cache = {}
         self._file_cache_order = deque()
+
+        # Pre-resolve file paths and segment paths to reduce per-sample overhead
+        # For very large datasets, skip pre-resolve to avoid long startup time
+        self._check_exists = len(self.dataframe) <= 50000
+        self._pre_resolve = len(self.dataframe) <= 200000
+
+        self._resolved_file_paths = None
+        self._resolved_segment_paths = None
+
+        if self._pre_resolve:
+            self._resolved_file_paths = []
+            self._resolved_segment_paths = []
+            self._missing_file_indices = set()
+
+            for idx, row in self.dataframe.iterrows():
+                file_path = self._resolve_file_path(row, check_exists=self._check_exists)
+                if file_path is None or (self._check_exists and not file_path.exists()):
+                    self._missing_file_indices.add(idx)
+                    self._resolved_file_paths.append(None)
+                else:
+                    self._resolved_file_paths.append(file_path)
+
+                seg_path = self._parse_segment_path(row)
+                self._resolved_segment_paths.append(seg_path)
+            self._missing_count = len(self._missing_file_indices)
+        else:
+            self._missing_count = None
         
     def __len__(self):
         return len(self.dataframe)
-        
-    def __getitem__(self, idx):
-        row = self.dataframe.iloc[idx]
-        file_name = row['source_file']
-        
-        # Handle source_segments: "['trial0/segment10']" -> "trial0/segment10"
+
+    def get_missing_count(self):
+        return self._missing_count
+
+    def get_file_path(self, idx):
+        if self._resolved_file_paths is None:
+            row = self.dataframe.iloc[idx]
+            return self._resolve_file_path(row, check_exists=False)
+        return self._resolved_file_paths[idx]
+
+    def get_segment_path(self, idx):
+        if self._resolved_segment_paths is None:
+            row = self.dataframe.iloc[idx]
+            return self._parse_segment_path(row)
+        return self._resolved_segment_paths[idx]
+
+    def _parse_segment_path(self, row):
+        if 'source_segments' not in row.index:
+            return None
         segment_path_str = row['source_segments']
-        
-        # Safer parsing
+
         try:
             segment_list = ast.literal_eval(segment_path_str)
             if isinstance(segment_list, list) and len(segment_list) > 0:
-                segment_path = segment_list[0]
-            else:
-                # Fallback if eval works but structure unexpected
-                segment_path = str(segment_list)
-        except:
-            # Fallback for simple strings or malformed
-            segment_path = segment_path_str.replace('[', '').replace(']', '').replace("'", "").replace('"', "")
+                return segment_list[0]
+            return str(segment_list)
+        except Exception:
+            return segment_path_str.replace('[', '').replace(']', '').replace("'", "").replace('"', '')
 
-        # Construct HDF5 path
-        file_path = self.hdf5_root / file_name
-        if not file_path.exists():
-             # Try TUAB subfolder
-             file_path = self.hdf5_root / "TUAB" / file_name
+    def _resolve_file_path(self, row, check_exists=True):
+        file_name = row['source_file']
+        dataset_source = row['dataset_source'] if 'dataset_source' in row.index else None
+        dataset_key = _normalize_dataset_key(dataset_source)
+
+        hdf5_root = self.hdf5_root
+        if self.hdf5_root_map and dataset_key in self.hdf5_root_map:
+            hdf5_root = self.hdf5_root_map[dataset_key]
+
+        if Path(file_name).is_absolute():
+            file_path = Path(file_name)
+        else:
+            if hdf5_root is None:
+                file_path = Path(file_name)
+            else:
+                file_path = hdf5_root / file_name
+
+        if not check_exists:
+            return file_path
+
+        if file_path.exists():
+            return file_path
+
+        if hdf5_root is not None and dataset_source:
+            alt_path = hdf5_root / str(dataset_source) / file_name
+            if not check_exists or alt_path.exists():
+                return alt_path
+
+        if hdf5_root is not None:
+            alt_path = hdf5_root / "TUAB" / file_name
+            if not check_exists or alt_path.exists():
+                return alt_path
+
+        return None
+        
+    def __getitem__(self, idx):
+        row = self.dataframe.iloc[idx]
+
+        if self._resolved_file_paths is None or self._resolved_segment_paths is None:
+            file_path = self._resolve_file_path(row, check_exists=False)
+            segment_path = self._parse_segment_path(row)
+        else:
+            file_path = self._resolved_file_paths[idx]
+            segment_path = self._resolved_segment_paths[idx]
+
+        if file_path is None or segment_path is None:
+            return torch.zeros((21, self.window_size)), torch.zeros(len(self.feature_cols))
         
         try:
             # LRU cache for file handles (per worker)
@@ -228,6 +317,9 @@ class FeaturePredictionDataset(Dataset):
             
             # Now obj should be the group containing 'eeg'
             data = obj['eeg'][()]
+            # Sanitize NaN/Inf early
+            if isinstance(data, np.ndarray):
+                data = np.nan_to_num(data, nan=0.0, posinf=0.0, neginf=0.0)
             
             # Standardize channels
             ch_names = None
@@ -265,10 +357,13 @@ class FeaturePredictionDataset(Dataset):
                 data = np.pad(data, ((0,0), (0, pad_len)), 'constant')
                 
             data = torch.FloatTensor(data)
+            data = torch.nan_to_num(data, nan=0.0, posinf=0.0, neginf=0.0)
             
             # Features
             features = row[self.feature_cols].values.astype(np.float32)
+            features = np.nan_to_num(features, nan=0.0, posinf=0.0, neginf=0.0)
             features = torch.FloatTensor(features)
+            features = torch.nan_to_num(features, nan=0.0, posinf=0.0, neginf=0.0)
             
             return data, features
             

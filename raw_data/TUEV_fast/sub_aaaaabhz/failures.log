@@ -1,0 +1,1218 @@
+/mnt/cx/EEG_text/raw_data/TUEV_fast/sub_aaaaabhz/merged_segment_55426.csv
+OSError: [Errno 28] No space left on device
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/mnt/cx/EEG_text/merged_segment_extraction.py", line 228, in _process_merged_segment_task
+    # 转换为 DataFrame 并保存
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/util/_decorators.py", line 333, in wrapper
+    # error: "Callable[[VarArg(Any), KwArg(Any)], Any]" has no
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/core/generic.py", line 3989, in to_csv
+    Get values at specified index and level
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/formats/format.py", line 1014, in to_csv
+    - to_csv
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/formats/csvs.py", line 251, in save
+    self.writer = csvlib.writer(
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/common.py", line 157, in __exit__
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/common.py", line 144, in close
+    Returns
+OSError: [Errno 28] No space left on device
+--------------------------------------------------------------------------------
+/mnt/cx/EEG_text/raw_data/TUEV_fast/sub_aaaaabhz/merged_segment_55425.csv
+OSError: [Errno 28] No space left on device
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/mnt/cx/EEG_text/merged_segment_extraction.py", line 228, in _process_merged_segment_task
+    # 转换为 DataFrame 并保存
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/util/_decorators.py", line 333, in wrapper
+    # error: "Callable[[VarArg(Any), KwArg(Any)], Any]" has no
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/core/generic.py", line 3989, in to_csv
+    Get values at specified index and level
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/formats/format.py", line 1014, in to_csv
+    - to_csv
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/formats/csvs.py", line 251, in save
+    self.writer = csvlib.writer(
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/common.py", line 157, in __exit__
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/common.py", line 144, in close
+    Returns
+OSError: [Errno 28] No space left on device
+--------------------------------------------------------------------------------
+/mnt/cx/EEG_text/raw_data/TUEV_fast/sub_aaaaabhz/merged_segment_55421.csv
+OSError: [Errno 28] No space left on device
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/mnt/cx/EEG_text/merged_segment_extraction.py", line 228, in _process_merged_segment_task
+    # 转换为 DataFrame 并保存
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/util/_decorators.py", line 333, in wrapper
+    # error: "Callable[[VarArg(Any), KwArg(Any)], Any]" has no
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/core/generic.py", line 3989, in to_csv
+    Get values at specified index and level
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/formats/format.py", line 1014, in to_csv
+    - to_csv
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/formats/csvs.py", line 251, in save
+    self.writer = csvlib.writer(
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/common.py", line 157, in __exit__
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/common.py", line 144, in close
+    Returns
+OSError: [Errno 28] No space left on device
+--------------------------------------------------------------------------------
+/mnt/cx/EEG_text/raw_data/TUEV_fast/sub_aaaaabhz/merged_segment_55423.csv
+OSError: [Errno 28] No space left on device
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/mnt/cx/EEG_text/merged_segment_extraction.py", line 228, in _process_merged_segment_task
+    # 转换为 DataFrame 并保存
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/util/_decorators.py", line 333, in wrapper
+    # error: "Callable[[VarArg(Any), KwArg(Any)], Any]" has no
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/core/generic.py", line 3989, in to_csv
+    Get values at specified index and level
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/formats/format.py", line 1014, in to_csv
+    - to_csv
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/formats/csvs.py", line 251, in save
+    self.writer = csvlib.writer(
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/common.py", line 157, in __exit__
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/common.py", line 144, in close
+    Returns
+OSError: [Errno 28] No space left on device
+--------------------------------------------------------------------------------
+/mnt/cx/EEG_text/raw_data/TUEV_fast/sub_aaaaabhz/merged_segment_55422.csv
+OSError: [Errno 28] No space left on device
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/mnt/cx/EEG_text/merged_segment_extraction.py", line 228, in _process_merged_segment_task
+    # 转换为 DataFrame 并保存
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/util/_decorators.py", line 333, in wrapper
+    # error: "Callable[[VarArg(Any), KwArg(Any)], Any]" has no
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/core/generic.py", line 3989, in to_csv
+    Get values at specified index and level
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/formats/format.py", line 1014, in to_csv
+    - to_csv
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/formats/csvs.py", line 251, in save
+    self.writer = csvlib.writer(
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/common.py", line 157, in __exit__
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/common.py", line 144, in close
+    Returns
+OSError: [Errno 28] No space left on device
+--------------------------------------------------------------------------------
+/mnt/cx/EEG_text/raw_data/TUEV_fast/sub_aaaaabhz/merged_segment_55427.csv
+OSError: [Errno 28] No space left on device
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/mnt/cx/EEG_text/merged_segment_extraction.py", line 228, in _process_merged_segment_task
+    # 转换为 DataFrame 并保存
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/util/_decorators.py", line 333, in wrapper
+    # error: "Callable[[VarArg(Any), KwArg(Any)], Any]" has no
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/core/generic.py", line 3989, in to_csv
+    Get values at specified index and level
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/formats/format.py", line 1014, in to_csv
+    - to_csv
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/formats/csvs.py", line 251, in save
+    self.writer = csvlib.writer(
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/common.py", line 157, in __exit__
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/common.py", line 144, in close
+    Returns
+OSError: [Errno 28] No space left on device
+--------------------------------------------------------------------------------
+/mnt/cx/EEG_text/raw_data/TUEV_fast/sub_aaaaabhz/merged_segment_55429.csv
+OSError: [Errno 28] No space left on device
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/mnt/cx/EEG_text/merged_segment_extraction.py", line 228, in _process_merged_segment_task
+    # 转换为 DataFrame 并保存
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/util/_decorators.py", line 333, in wrapper
+    # error: "Callable[[VarArg(Any), KwArg(Any)], Any]" has no
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/core/generic.py", line 3989, in to_csv
+    Get values at specified index and level
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/formats/format.py", line 1014, in to_csv
+    - to_csv
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/formats/csvs.py", line 251, in save
+    self.writer = csvlib.writer(
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/common.py", line 157, in __exit__
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/common.py", line 144, in close
+    Returns
+OSError: [Errno 28] No space left on device
+--------------------------------------------------------------------------------
+/mnt/cx/EEG_text/raw_data/TUEV_fast/sub_aaaaabhz/merged_segment_55432.csv
+OSError: [Errno 28] No space left on device
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/mnt/cx/EEG_text/merged_segment_extraction.py", line 228, in _process_merged_segment_task
+    # 转换为 DataFrame 并保存
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/util/_decorators.py", line 333, in wrapper
+    # error: "Callable[[VarArg(Any), KwArg(Any)], Any]" has no
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/core/generic.py", line 3989, in to_csv
+    Get values at specified index and level
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/formats/format.py", line 1014, in to_csv
+    - to_csv
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/formats/csvs.py", line 251, in save
+    self.writer = csvlib.writer(
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/common.py", line 157, in __exit__
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/common.py", line 144, in close
+    Returns
+OSError: [Errno 28] No space left on device
+--------------------------------------------------------------------------------
+/mnt/cx/EEG_text/raw_data/TUEV_fast/sub_aaaaabhz/merged_segment_55433.csv
+OSError: [Errno 28] No space left on device
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/mnt/cx/EEG_text/merged_segment_extraction.py", line 228, in _process_merged_segment_task
+    # 转换为 DataFrame 并保存
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/util/_decorators.py", line 333, in wrapper
+    # error: "Callable[[VarArg(Any), KwArg(Any)], Any]" has no
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/core/generic.py", line 3989, in to_csv
+    Get values at specified index and level
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/formats/format.py", line 1014, in to_csv
+    - to_csv
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/formats/csvs.py", line 251, in save
+    self.writer = csvlib.writer(
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/common.py", line 157, in __exit__
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/common.py", line 144, in close
+    Returns
+OSError: [Errno 28] No space left on device
+--------------------------------------------------------------------------------
+/mnt/cx/EEG_text/raw_data/TUEV_fast/sub_aaaaabhz/merged_segment_55431.csv
+OSError: [Errno 28] No space left on device
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/mnt/cx/EEG_text/merged_segment_extraction.py", line 228, in _process_merged_segment_task
+    # 转换为 DataFrame 并保存
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/util/_decorators.py", line 333, in wrapper
+    # error: "Callable[[VarArg(Any), KwArg(Any)], Any]" has no
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/core/generic.py", line 3989, in to_csv
+    Get values at specified index and level
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/formats/format.py", line 1014, in to_csv
+    - to_csv
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/formats/csvs.py", line 251, in save
+    self.writer = csvlib.writer(
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/common.py", line 157, in __exit__
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/common.py", line 144, in close
+    Returns
+OSError: [Errno 28] No space left on device
+--------------------------------------------------------------------------------
+/mnt/cx/EEG_text/raw_data/TUEV_fast/sub_aaaaabhz/merged_segment_55430.csv
+OSError: [Errno 28] No space left on device
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/mnt/cx/EEG_text/merged_segment_extraction.py", line 228, in _process_merged_segment_task
+    # 转换为 DataFrame 并保存
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/util/_decorators.py", line 333, in wrapper
+    # error: "Callable[[VarArg(Any), KwArg(Any)], Any]" has no
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/core/generic.py", line 3989, in to_csv
+    Get values at specified index and level
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/formats/format.py", line 1014, in to_csv
+    - to_csv
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/formats/csvs.py", line 251, in save
+    self.writer = csvlib.writer(
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/common.py", line 157, in __exit__
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/common.py", line 144, in close
+    Returns
+OSError: [Errno 28] No space left on device
+--------------------------------------------------------------------------------
+/mnt/cx/EEG_text/raw_data/TUEV_fast/sub_aaaaabhz/merged_segment_55435.csv
+OSError: [Errno 28] No space left on device
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/mnt/cx/EEG_text/merged_segment_extraction.py", line 228, in _process_merged_segment_task
+    # 转换为 DataFrame 并保存
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/util/_decorators.py", line 333, in wrapper
+    # error: "Callable[[VarArg(Any), KwArg(Any)], Any]" has no
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/core/generic.py", line 3989, in to_csv
+    Get values at specified index and level
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/formats/format.py", line 1014, in to_csv
+    - to_csv
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/formats/csvs.py", line 251, in save
+    self.writer = csvlib.writer(
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/common.py", line 157, in __exit__
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/common.py", line 144, in close
+    Returns
+OSError: [Errno 28] No space left on device
+--------------------------------------------------------------------------------
+/mnt/cx/EEG_text/raw_data/TUEV_fast/sub_aaaaabhz/merged_segment_55434.csv
+OSError: [Errno 28] No space left on device
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/mnt/cx/EEG_text/merged_segment_extraction.py", line 228, in _process_merged_segment_task
+    # 转换为 DataFrame 并保存
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/util/_decorators.py", line 333, in wrapper
+    # error: "Callable[[VarArg(Any), KwArg(Any)], Any]" has no
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/core/generic.py", line 3989, in to_csv
+    Get values at specified index and level
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/formats/format.py", line 1014, in to_csv
+    - to_csv
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/formats/csvs.py", line 251, in save
+    self.writer = csvlib.writer(
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/common.py", line 157, in __exit__
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/common.py", line 144, in close
+    Returns
+OSError: [Errno 28] No space left on device
+--------------------------------------------------------------------------------
+/mnt/cx/EEG_text/raw_data/TUEV_fast/sub_aaaaabhz/merged_segment_55437.csv
+OSError: [Errno 28] No space left on device
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/mnt/cx/EEG_text/merged_segment_extraction.py", line 228, in _process_merged_segment_task
+    # 转换为 DataFrame 并保存
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/util/_decorators.py", line 333, in wrapper
+    # error: "Callable[[VarArg(Any), KwArg(Any)], Any]" has no
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/core/generic.py", line 3989, in to_csv
+    Get values at specified index and level
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/formats/format.py", line 1014, in to_csv
+    - to_csv
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/formats/csvs.py", line 251, in save
+    self.writer = csvlib.writer(
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/common.py", line 157, in __exit__
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/common.py", line 144, in close
+    Returns
+OSError: [Errno 28] No space left on device
+--------------------------------------------------------------------------------
+/mnt/cx/EEG_text/raw_data/TUEV_fast/sub_aaaaabhz/merged_segment_55438.csv
+OSError: [Errno 28] No space left on device
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/mnt/cx/EEG_text/merged_segment_extraction.py", line 228, in _process_merged_segment_task
+    # 转换为 DataFrame 并保存
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/util/_decorators.py", line 333, in wrapper
+    # error: "Callable[[VarArg(Any), KwArg(Any)], Any]" has no
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/core/generic.py", line 3989, in to_csv
+    Get values at specified index and level
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/formats/format.py", line 1014, in to_csv
+    - to_csv
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/formats/csvs.py", line 251, in save
+    self.writer = csvlib.writer(
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/common.py", line 157, in __exit__
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/common.py", line 144, in close
+    Returns
+OSError: [Errno 28] No space left on device
+--------------------------------------------------------------------------------
+/mnt/cx/EEG_text/raw_data/TUEV_fast/sub_aaaaabhz/merged_segment_55436.csv
+OSError: [Errno 28] No space left on device
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/mnt/cx/EEG_text/merged_segment_extraction.py", line 228, in _process_merged_segment_task
+    # 转换为 DataFrame 并保存
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/util/_decorators.py", line 333, in wrapper
+    # error: "Callable[[VarArg(Any), KwArg(Any)], Any]" has no
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/core/generic.py", line 3989, in to_csv
+    Get values at specified index and level
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/formats/format.py", line 1014, in to_csv
+    - to_csv
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/formats/csvs.py", line 251, in save
+    self.writer = csvlib.writer(
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/common.py", line 157, in __exit__
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/common.py", line 144, in close
+    Returns
+OSError: [Errno 28] No space left on device
+--------------------------------------------------------------------------------
+/mnt/cx/EEG_text/raw_data/TUEV_fast/sub_aaaaabhz/merged_segment_55439.csv
+OSError: [Errno 28] No space left on device
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/mnt/cx/EEG_text/merged_segment_extraction.py", line 228, in _process_merged_segment_task
+    # 转换为 DataFrame 并保存
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/util/_decorators.py", line 333, in wrapper
+    # error: "Callable[[VarArg(Any), KwArg(Any)], Any]" has no
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/core/generic.py", line 3989, in to_csv
+    Get values at specified index and level
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/formats/format.py", line 1014, in to_csv
+    - to_csv
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/formats/csvs.py", line 251, in save
+    self.writer = csvlib.writer(
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/common.py", line 157, in __exit__
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/common.py", line 144, in close
+    Returns
+OSError: [Errno 28] No space left on device
+--------------------------------------------------------------------------------
+/mnt/cx/EEG_text/raw_data/TUEV_fast/sub_aaaaabhz/merged_segment_55440.csv
+OSError: [Errno 28] No space left on device
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/mnt/cx/EEG_text/merged_segment_extraction.py", line 228, in _process_merged_segment_task
+    # 转换为 DataFrame 并保存
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/util/_decorators.py", line 333, in wrapper
+    # error: "Callable[[VarArg(Any), KwArg(Any)], Any]" has no
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/core/generic.py", line 3989, in to_csv
+    Get values at specified index and level
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/formats/format.py", line 1014, in to_csv
+    - to_csv
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/formats/csvs.py", line 251, in save
+    self.writer = csvlib.writer(
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/common.py", line 157, in __exit__
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/common.py", line 144, in close
+    Returns
+OSError: [Errno 28] No space left on device
+--------------------------------------------------------------------------------
+/mnt/cx/EEG_text/raw_data/TUEV_fast/sub_aaaaabhz/merged_segment_55441.csv
+OSError: [Errno 28] No space left on device
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/mnt/cx/EEG_text/merged_segment_extraction.py", line 228, in _process_merged_segment_task
+    # 转换为 DataFrame 并保存
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/util/_decorators.py", line 333, in wrapper
+    # error: "Callable[[VarArg(Any), KwArg(Any)], Any]" has no
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/core/generic.py", line 3989, in to_csv
+    Get values at specified index and level
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/formats/format.py", line 1014, in to_csv
+    - to_csv
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/formats/csvs.py", line 251, in save
+    self.writer = csvlib.writer(
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/common.py", line 157, in __exit__
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/common.py", line 144, in close
+    Returns
+OSError: [Errno 28] No space left on device
+--------------------------------------------------------------------------------
+/mnt/cx/EEG_text/raw_data/TUEV_fast/sub_aaaaabhz/merged_segment_55447.csv
+OSError: [Errno 28] No space left on device
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/mnt/cx/EEG_text/merged_segment_extraction.py", line 228, in _process_merged_segment_task
+    # 转换为 DataFrame 并保存
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/util/_decorators.py", line 333, in wrapper
+    # error: "Callable[[VarArg(Any), KwArg(Any)], Any]" has no
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/core/generic.py", line 3989, in to_csv
+    Get values at specified index and level
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/formats/format.py", line 1014, in to_csv
+    - to_csv
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/formats/csvs.py", line 251, in save
+    self.writer = csvlib.writer(
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/common.py", line 157, in __exit__
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/common.py", line 144, in close
+    Returns
+OSError: [Errno 28] No space left on device
+--------------------------------------------------------------------------------
+/mnt/cx/EEG_text/raw_data/TUEV_fast/sub_aaaaabhz/merged_segment_55448.csv
+OSError: [Errno 28] No space left on device
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/mnt/cx/EEG_text/merged_segment_extraction.py", line 228, in _process_merged_segment_task
+    # 转换为 DataFrame 并保存
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/util/_decorators.py", line 333, in wrapper
+    # error: "Callable[[VarArg(Any), KwArg(Any)], Any]" has no
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/core/generic.py", line 3989, in to_csv
+    Get values at specified index and level
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/formats/format.py", line 1014, in to_csv
+    - to_csv
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/formats/csvs.py", line 251, in save
+    self.writer = csvlib.writer(
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/common.py", line 157, in __exit__
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/common.py", line 144, in close
+    Returns
+OSError: [Errno 28] No space left on device
+--------------------------------------------------------------------------------
+/mnt/cx/EEG_text/raw_data/TUEV_fast/sub_aaaaabhz/merged_segment_55450.csv
+OSError: [Errno 28] No space left on device
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/mnt/cx/EEG_text/merged_segment_extraction.py", line 228, in _process_merged_segment_task
+    # 转换为 DataFrame 并保存
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/util/_decorators.py", line 333, in wrapper
+    # error: "Callable[[VarArg(Any), KwArg(Any)], Any]" has no
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/core/generic.py", line 3989, in to_csv
+    Get values at specified index and level
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/formats/format.py", line 1014, in to_csv
+    - to_csv
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/formats/csvs.py", line 251, in save
+    self.writer = csvlib.writer(
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/common.py", line 157, in __exit__
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/common.py", line 144, in close
+    Returns
+OSError: [Errno 28] No space left on device
+--------------------------------------------------------------------------------
+/mnt/cx/EEG_text/raw_data/TUEV_fast/sub_aaaaabhz/merged_segment_55445.csv
+OSError: [Errno 28] No space left on device
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/mnt/cx/EEG_text/merged_segment_extraction.py", line 228, in _process_merged_segment_task
+    # 转换为 DataFrame 并保存
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/util/_decorators.py", line 333, in wrapper
+    # error: "Callable[[VarArg(Any), KwArg(Any)], Any]" has no
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/core/generic.py", line 3989, in to_csv
+    Get values at specified index and level
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/formats/format.py", line 1014, in to_csv
+    - to_csv
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/formats/csvs.py", line 251, in save
+    self.writer = csvlib.writer(
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/common.py", line 157, in __exit__
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/common.py", line 144, in close
+    Returns
+OSError: [Errno 28] No space left on device
+--------------------------------------------------------------------------------
+/mnt/cx/EEG_text/raw_data/TUEV_fast/sub_aaaaabhz/merged_segment_55443.csv
+OSError: [Errno 28] No space left on device
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/mnt/cx/EEG_text/merged_segment_extraction.py", line 228, in _process_merged_segment_task
+    # 转换为 DataFrame 并保存
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/util/_decorators.py", line 333, in wrapper
+    # error: "Callable[[VarArg(Any), KwArg(Any)], Any]" has no
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/core/generic.py", line 3989, in to_csv
+    Get values at specified index and level
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/formats/format.py", line 1014, in to_csv
+    - to_csv
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/formats/csvs.py", line 251, in save
+    self.writer = csvlib.writer(
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/common.py", line 157, in __exit__
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/common.py", line 144, in close
+    Returns
+OSError: [Errno 28] No space left on device
+--------------------------------------------------------------------------------
+/mnt/cx/EEG_text/raw_data/TUEV_fast/sub_aaaaabhz/merged_segment_55446.csv
+OSError: [Errno 28] No space left on device
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/mnt/cx/EEG_text/merged_segment_extraction.py", line 228, in _process_merged_segment_task
+    # 转换为 DataFrame 并保存
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/util/_decorators.py", line 333, in wrapper
+    # error: "Callable[[VarArg(Any), KwArg(Any)], Any]" has no
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/core/generic.py", line 3989, in to_csv
+    Get values at specified index and level
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/formats/format.py", line 1014, in to_csv
+    - to_csv
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/formats/csvs.py", line 251, in save
+    self.writer = csvlib.writer(
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/common.py", line 157, in __exit__
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/common.py", line 144, in close
+    Returns
+OSError: [Errno 28] No space left on device
+--------------------------------------------------------------------------------
+/mnt/cx/EEG_text/raw_data/TUEV_fast/sub_aaaaabhz/merged_segment_55453.csv
+OSError: [Errno 28] No space left on device
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/mnt/cx/EEG_text/merged_segment_extraction.py", line 228, in _process_merged_segment_task
+    # 转换为 DataFrame 并保存
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/util/_decorators.py", line 333, in wrapper
+    # error: "Callable[[VarArg(Any), KwArg(Any)], Any]" has no
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/core/generic.py", line 3989, in to_csv
+    Get values at specified index and level
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/formats/format.py", line 1014, in to_csv
+    - to_csv
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/formats/csvs.py", line 251, in save
+    self.writer = csvlib.writer(
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/common.py", line 157, in __exit__
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/common.py", line 144, in close
+    Returns
+OSError: [Errno 28] No space left on device
+--------------------------------------------------------------------------------
+/mnt/cx/EEG_text/raw_data/TUEV_fast/sub_aaaaabhz/merged_segment_55449.csv
+OSError: [Errno 28] No space left on device
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/mnt/cx/EEG_text/merged_segment_extraction.py", line 228, in _process_merged_segment_task
+    # 转换为 DataFrame 并保存
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/util/_decorators.py", line 333, in wrapper
+    # error: "Callable[[VarArg(Any), KwArg(Any)], Any]" has no
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/core/generic.py", line 3989, in to_csv
+    Get values at specified index and level
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/formats/format.py", line 1014, in to_csv
+    - to_csv
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/formats/csvs.py", line 251, in save
+    self.writer = csvlib.writer(
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/common.py", line 157, in __exit__
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/common.py", line 144, in close
+    Returns
+OSError: [Errno 28] No space left on device
+--------------------------------------------------------------------------------
+/mnt/cx/EEG_text/raw_data/TUEV_fast/sub_aaaaabhz/merged_segment_55442.csv
+OSError: [Errno 28] No space left on device
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/mnt/cx/EEG_text/merged_segment_extraction.py", line 228, in _process_merged_segment_task
+    # 转换为 DataFrame 并保存
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/util/_decorators.py", line 333, in wrapper
+    # error: "Callable[[VarArg(Any), KwArg(Any)], Any]" has no
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/core/generic.py", line 3989, in to_csv
+    Get values at specified index and level
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/formats/format.py", line 1014, in to_csv
+    - to_csv
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/formats/csvs.py", line 251, in save
+    self.writer = csvlib.writer(
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/common.py", line 157, in __exit__
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/common.py", line 144, in close
+    Returns
+OSError: [Errno 28] No space left on device
+--------------------------------------------------------------------------------
+/mnt/cx/EEG_text/raw_data/TUEV_fast/sub_aaaaabhz/merged_segment_55455.csv
+OSError: [Errno 28] No space left on device
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/mnt/cx/EEG_text/merged_segment_extraction.py", line 228, in _process_merged_segment_task
+    # 转换为 DataFrame 并保存
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/util/_decorators.py", line 333, in wrapper
+    # error: "Callable[[VarArg(Any), KwArg(Any)], Any]" has no
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/core/generic.py", line 3989, in to_csv
+    Get values at specified index and level
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/formats/format.py", line 1014, in to_csv
+    - to_csv
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/formats/csvs.py", line 251, in save
+    self.writer = csvlib.writer(
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/common.py", line 157, in __exit__
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/common.py", line 144, in close
+    Returns
+OSError: [Errno 28] No space left on device
+--------------------------------------------------------------------------------
+/mnt/cx/EEG_text/raw_data/TUEV_fast/sub_aaaaabhz/merged_segment_55451.csv
+OSError: [Errno 28] No space left on device
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/mnt/cx/EEG_text/merged_segment_extraction.py", line 228, in _process_merged_segment_task
+    # 转换为 DataFrame 并保存
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/util/_decorators.py", line 333, in wrapper
+    # error: "Callable[[VarArg(Any), KwArg(Any)], Any]" has no
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/core/generic.py", line 3989, in to_csv
+    Get values at specified index and level
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/formats/format.py", line 1014, in to_csv
+    - to_csv
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/formats/csvs.py", line 251, in save
+    self.writer = csvlib.writer(
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/common.py", line 157, in __exit__
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/common.py", line 144, in close
+    Returns
+OSError: [Errno 28] No space left on device
+--------------------------------------------------------------------------------
+/mnt/cx/EEG_text/raw_data/TUEV_fast/sub_aaaaabhz/merged_segment_55456.csv
+OSError: [Errno 28] No space left on device
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/mnt/cx/EEG_text/merged_segment_extraction.py", line 228, in _process_merged_segment_task
+    # 转换为 DataFrame 并保存
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/util/_decorators.py", line 333, in wrapper
+    # error: "Callable[[VarArg(Any), KwArg(Any)], Any]" has no
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/core/generic.py", line 3989, in to_csv
+    Get values at specified index and level
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/formats/format.py", line 1014, in to_csv
+    - to_csv
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/formats/csvs.py", line 251, in save
+    self.writer = csvlib.writer(
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/common.py", line 157, in __exit__
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/common.py", line 144, in close
+    Returns
+OSError: [Errno 28] No space left on device
+--------------------------------------------------------------------------------
+/mnt/cx/EEG_text/raw_data/TUEV_fast/sub_aaaaabhz/merged_segment_55454.csv
+OSError: [Errno 28] No space left on device
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/mnt/cx/EEG_text/merged_segment_extraction.py", line 228, in _process_merged_segment_task
+    # 转换为 DataFrame 并保存
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/util/_decorators.py", line 333, in wrapper
+    # error: "Callable[[VarArg(Any), KwArg(Any)], Any]" has no
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/core/generic.py", line 3989, in to_csv
+    Get values at specified index and level
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/formats/format.py", line 1014, in to_csv
+    - to_csv
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/formats/csvs.py", line 251, in save
+    self.writer = csvlib.writer(
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/common.py", line 157, in __exit__
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/common.py", line 144, in close
+    Returns
+OSError: [Errno 28] No space left on device
+--------------------------------------------------------------------------------
+/mnt/cx/EEG_text/raw_data/TUEV_fast/sub_aaaaabhz/merged_segment_55444.csv
+OSError: [Errno 28] No space left on device
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/mnt/cx/EEG_text/merged_segment_extraction.py", line 228, in _process_merged_segment_task
+    # 转换为 DataFrame 并保存
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/util/_decorators.py", line 333, in wrapper
+    # error: "Callable[[VarArg(Any), KwArg(Any)], Any]" has no
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/core/generic.py", line 3989, in to_csv
+    Get values at specified index and level
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/formats/format.py", line 1014, in to_csv
+    - to_csv
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/formats/csvs.py", line 251, in save
+    self.writer = csvlib.writer(
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/common.py", line 157, in __exit__
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/common.py", line 144, in close
+    Returns
+OSError: [Errno 28] No space left on device
+--------------------------------------------------------------------------------
+/mnt/cx/EEG_text/raw_data/TUEV_fast/sub_aaaaabhz/merged_segment_55452.csv
+OSError: [Errno 28] No space left on device
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/mnt/cx/EEG_text/merged_segment_extraction.py", line 228, in _process_merged_segment_task
+    # 转换为 DataFrame 并保存
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/util/_decorators.py", line 333, in wrapper
+    # error: "Callable[[VarArg(Any), KwArg(Any)], Any]" has no
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/core/generic.py", line 3989, in to_csv
+    Get values at specified index and level
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/formats/format.py", line 1014, in to_csv
+    - to_csv
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/formats/csvs.py", line 251, in save
+    self.writer = csvlib.writer(
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/common.py", line 157, in __exit__
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/common.py", line 144, in close
+    Returns
+OSError: [Errno 28] No space left on device
+--------------------------------------------------------------------------------
+/mnt/cx/EEG_text/raw_data/TUEV_fast/sub_aaaaabhz/merged_segment_55458.csv
+OSError: [Errno 28] No space left on device
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/mnt/cx/EEG_text/merged_segment_extraction.py", line 228, in _process_merged_segment_task
+    # 转换为 DataFrame 并保存
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/util/_decorators.py", line 333, in wrapper
+    # error: "Callable[[VarArg(Any), KwArg(Any)], Any]" has no
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/core/generic.py", line 3989, in to_csv
+    Get values at specified index and level
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/formats/format.py", line 1014, in to_csv
+    - to_csv
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/formats/csvs.py", line 251, in save
+    self.writer = csvlib.writer(
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/common.py", line 157, in __exit__
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/common.py", line 144, in close
+    Returns
+OSError: [Errno 28] No space left on device
+--------------------------------------------------------------------------------
+/mnt/cx/EEG_text/raw_data/TUEV_fast/sub_aaaaabhz/merged_segment_55457.csv
+OSError: [Errno 28] No space left on device
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/mnt/cx/EEG_text/merged_segment_extraction.py", line 228, in _process_merged_segment_task
+    # 转换为 DataFrame 并保存
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/util/_decorators.py", line 333, in wrapper
+    # error: "Callable[[VarArg(Any), KwArg(Any)], Any]" has no
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/core/generic.py", line 3989, in to_csv
+    Get values at specified index and level
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/formats/format.py", line 1014, in to_csv
+    - to_csv
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/formats/csvs.py", line 251, in save
+    self.writer = csvlib.writer(
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/common.py", line 157, in __exit__
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/common.py", line 144, in close
+    Returns
+OSError: [Errno 28] No space left on device
+--------------------------------------------------------------------------------
+/mnt/cx/EEG_text/raw_data/TUEV_fast/sub_aaaaabhz/merged_segment_55459.csv
+OSError: [Errno 28] No space left on device
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/mnt/cx/EEG_text/merged_segment_extraction.py", line 228, in _process_merged_segment_task
+    # 转换为 DataFrame 并保存
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/util/_decorators.py", line 333, in wrapper
+    # error: "Callable[[VarArg(Any), KwArg(Any)], Any]" has no
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/core/generic.py", line 3989, in to_csv
+    Get values at specified index and level
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/formats/format.py", line 1014, in to_csv
+    - to_csv
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/formats/csvs.py", line 251, in save
+    self.writer = csvlib.writer(
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/common.py", line 157, in __exit__
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/common.py", line 144, in close
+    Returns
+OSError: [Errno 28] No space left on device
+--------------------------------------------------------------------------------
+/mnt/cx/EEG_text/raw_data/TUEV_fast/sub_aaaaabhz/merged_segment_55461.csv
+OSError: [Errno 28] No space left on device
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/mnt/cx/EEG_text/merged_segment_extraction.py", line 228, in _process_merged_segment_task
+    # 转换为 DataFrame 并保存
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/util/_decorators.py", line 333, in wrapper
+    # error: "Callable[[VarArg(Any), KwArg(Any)], Any]" has no
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/core/generic.py", line 3989, in to_csv
+    Get values at specified index and level
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/formats/format.py", line 1014, in to_csv
+    - to_csv
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/formats/csvs.py", line 251, in save
+    self.writer = csvlib.writer(
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/common.py", line 157, in __exit__
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/common.py", line 144, in close
+    Returns
+OSError: [Errno 28] No space left on device
+--------------------------------------------------------------------------------
+/mnt/cx/EEG_text/raw_data/TUEV_fast/sub_aaaaabhz/merged_segment_55460.csv
+OSError: [Errno 28] No space left on device
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/mnt/cx/EEG_text/merged_segment_extraction.py", line 228, in _process_merged_segment_task
+    # 转换为 DataFrame 并保存
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/util/_decorators.py", line 333, in wrapper
+    # error: "Callable[[VarArg(Any), KwArg(Any)], Any]" has no
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/core/generic.py", line 3989, in to_csv
+    Get values at specified index and level
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/formats/format.py", line 1014, in to_csv
+    - to_csv
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/formats/csvs.py", line 251, in save
+    self.writer = csvlib.writer(
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/common.py", line 157, in __exit__
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/common.py", line 144, in close
+    Returns
+OSError: [Errno 28] No space left on device
+--------------------------------------------------------------------------------
+/mnt/cx/EEG_text/raw_data/TUEV_fast/sub_aaaaabhz/merged_segment_55463.csv
+OSError: [Errno 28] No space left on device
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/mnt/cx/EEG_text/merged_segment_extraction.py", line 228, in _process_merged_segment_task
+    # 转换为 DataFrame 并保存
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/util/_decorators.py", line 333, in wrapper
+    # error: "Callable[[VarArg(Any), KwArg(Any)], Any]" has no
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/core/generic.py", line 3989, in to_csv
+    Get values at specified index and level
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/formats/format.py", line 1014, in to_csv
+    - to_csv
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/formats/csvs.py", line 251, in save
+    self.writer = csvlib.writer(
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/common.py", line 157, in __exit__
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/common.py", line 144, in close
+    Returns
+OSError: [Errno 28] No space left on device
+--------------------------------------------------------------------------------
+/mnt/cx/EEG_text/raw_data/TUEV_fast/sub_aaaaabhz/merged_segment_55466.csv
+OSError: [Errno 28] No space left on device
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/mnt/cx/EEG_text/merged_segment_extraction.py", line 228, in _process_merged_segment_task
+    # 转换为 DataFrame 并保存
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/util/_decorators.py", line 333, in wrapper
+    # error: "Callable[[VarArg(Any), KwArg(Any)], Any]" has no
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/core/generic.py", line 3989, in to_csv
+    Get values at specified index and level
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/formats/format.py", line 1014, in to_csv
+    - to_csv
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/formats/csvs.py", line 251, in save
+    self.writer = csvlib.writer(
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/common.py", line 157, in __exit__
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/common.py", line 144, in close
+    Returns
+OSError: [Errno 28] No space left on device
+--------------------------------------------------------------------------------
+/mnt/cx/EEG_text/raw_data/TUEV_fast/sub_aaaaabhz/merged_segment_55464.csv
+OSError: [Errno 28] No space left on device
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/mnt/cx/EEG_text/merged_segment_extraction.py", line 228, in _process_merged_segment_task
+    # 转换为 DataFrame 并保存
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/util/_decorators.py", line 333, in wrapper
+    # error: "Callable[[VarArg(Any), KwArg(Any)], Any]" has no
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/core/generic.py", line 3989, in to_csv
+    Get values at specified index and level
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/formats/format.py", line 1014, in to_csv
+    - to_csv
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/formats/csvs.py", line 251, in save
+    self.writer = csvlib.writer(
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/common.py", line 157, in __exit__
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/common.py", line 144, in close
+    Returns
+OSError: [Errno 28] No space left on device
+--------------------------------------------------------------------------------
+/mnt/cx/EEG_text/raw_data/TUEV_fast/sub_aaaaabhz/merged_segment_55462.csv
+OSError: [Errno 28] No space left on device
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/mnt/cx/EEG_text/merged_segment_extraction.py", line 228, in _process_merged_segment_task
+    # 转换为 DataFrame 并保存
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/util/_decorators.py", line 333, in wrapper
+    # error: "Callable[[VarArg(Any), KwArg(Any)], Any]" has no
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/core/generic.py", line 3989, in to_csv
+    Get values at specified index and level
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/formats/format.py", line 1014, in to_csv
+    - to_csv
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/formats/csvs.py", line 251, in save
+    self.writer = csvlib.writer(
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/common.py", line 157, in __exit__
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/common.py", line 144, in close
+    Returns
+OSError: [Errno 28] No space left on device
+--------------------------------------------------------------------------------
+/mnt/cx/EEG_text/raw_data/TUEV_fast/sub_aaaaabhz/merged_segment_55472.csv
+OSError: [Errno 28] No space left on device
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/mnt/cx/EEG_text/merged_segment_extraction.py", line 228, in _process_merged_segment_task
+    # 转换为 DataFrame 并保存
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/util/_decorators.py", line 333, in wrapper
+    # error: "Callable[[VarArg(Any), KwArg(Any)], Any]" has no
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/core/generic.py", line 3989, in to_csv
+    Get values at specified index and level
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/formats/format.py", line 1014, in to_csv
+    - to_csv
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/formats/csvs.py", line 251, in save
+    self.writer = csvlib.writer(
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/common.py", line 157, in __exit__
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/common.py", line 144, in close
+    Returns
+OSError: [Errno 28] No space left on device
+--------------------------------------------------------------------------------
+/mnt/cx/EEG_text/raw_data/TUEV_fast/sub_aaaaabhz/merged_segment_55475.csv
+OSError: [Errno 28] No space left on device
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/mnt/cx/EEG_text/merged_segment_extraction.py", line 228, in _process_merged_segment_task
+    # 转换为 DataFrame 并保存
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/util/_decorators.py", line 333, in wrapper
+    # error: "Callable[[VarArg(Any), KwArg(Any)], Any]" has no
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/core/generic.py", line 3989, in to_csv
+    Get values at specified index and level
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/formats/format.py", line 1014, in to_csv
+    - to_csv
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/formats/csvs.py", line 251, in save
+    self.writer = csvlib.writer(
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/common.py", line 157, in __exit__
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/common.py", line 144, in close
+    Returns
+OSError: [Errno 28] No space left on device
+--------------------------------------------------------------------------------
+/mnt/cx/EEG_text/raw_data/TUEV_fast/sub_aaaaabhz/merged_segment_55471.csv
+OSError: [Errno 28] No space left on device
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/mnt/cx/EEG_text/merged_segment_extraction.py", line 228, in _process_merged_segment_task
+    # 转换为 DataFrame 并保存
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/util/_decorators.py", line 333, in wrapper
+    # error: "Callable[[VarArg(Any), KwArg(Any)], Any]" has no
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/core/generic.py", line 3989, in to_csv
+    Get values at specified index and level
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/formats/format.py", line 1014, in to_csv
+    - to_csv
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/formats/csvs.py", line 251, in save
+    self.writer = csvlib.writer(
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/common.py", line 157, in __exit__
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/common.py", line 144, in close
+    Returns
+OSError: [Errno 28] No space left on device
+--------------------------------------------------------------------------------
+/mnt/cx/EEG_text/raw_data/TUEV_fast/sub_aaaaabhz/merged_segment_55469.csv
+OSError: [Errno 28] No space left on device
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/mnt/cx/EEG_text/merged_segment_extraction.py", line 228, in _process_merged_segment_task
+    # 转换为 DataFrame 并保存
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/util/_decorators.py", line 333, in wrapper
+    # error: "Callable[[VarArg(Any), KwArg(Any)], Any]" has no
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/core/generic.py", line 3989, in to_csv
+    Get values at specified index and level
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/formats/format.py", line 1014, in to_csv
+    - to_csv
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/formats/csvs.py", line 251, in save
+    self.writer = csvlib.writer(
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/common.py", line 157, in __exit__
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/common.py", line 144, in close
+    Returns
+OSError: [Errno 28] No space left on device
+--------------------------------------------------------------------------------
+/mnt/cx/EEG_text/raw_data/TUEV_fast/sub_aaaaabhz/merged_segment_55467.csv
+OSError: [Errno 28] No space left on device
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/mnt/cx/EEG_text/merged_segment_extraction.py", line 228, in _process_merged_segment_task
+    # 转换为 DataFrame 并保存
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/util/_decorators.py", line 333, in wrapper
+    # error: "Callable[[VarArg(Any), KwArg(Any)], Any]" has no
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/core/generic.py", line 3989, in to_csv
+    Get values at specified index and level
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/formats/format.py", line 1014, in to_csv
+    - to_csv
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/formats/csvs.py", line 251, in save
+    self.writer = csvlib.writer(
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/common.py", line 157, in __exit__
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/common.py", line 144, in close
+    Returns
+OSError: [Errno 28] No space left on device
+--------------------------------------------------------------------------------
+/mnt/cx/EEG_text/raw_data/TUEV_fast/sub_aaaaabhz/merged_segment_55468.csv
+OSError: [Errno 28] No space left on device
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/mnt/cx/EEG_text/merged_segment_extraction.py", line 228, in _process_merged_segment_task
+    # 转换为 DataFrame 并保存
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/util/_decorators.py", line 333, in wrapper
+    # error: "Callable[[VarArg(Any), KwArg(Any)], Any]" has no
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/core/generic.py", line 3989, in to_csv
+    Get values at specified index and level
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/formats/format.py", line 1014, in to_csv
+    - to_csv
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/formats/csvs.py", line 251, in save
+    self.writer = csvlib.writer(
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/common.py", line 157, in __exit__
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/common.py", line 144, in close
+    Returns
+OSError: [Errno 28] No space left on device
+--------------------------------------------------------------------------------
+/mnt/cx/EEG_text/raw_data/TUEV_fast/sub_aaaaabhz/merged_segment_55477.csv
+OSError: [Errno 28] No space left on device
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/mnt/cx/EEG_text/merged_segment_extraction.py", line 228, in _process_merged_segment_task
+    # 转换为 DataFrame 并保存
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/util/_decorators.py", line 333, in wrapper
+    # error: "Callable[[VarArg(Any), KwArg(Any)], Any]" has no
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/core/generic.py", line 3989, in to_csv
+    Get values at specified index and level
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/formats/format.py", line 1014, in to_csv
+    - to_csv
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/formats/csvs.py", line 251, in save
+    self.writer = csvlib.writer(
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/common.py", line 157, in __exit__
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/common.py", line 144, in close
+    Returns
+OSError: [Errno 28] No space left on device
+--------------------------------------------------------------------------------
+/mnt/cx/EEG_text/raw_data/TUEV_fast/sub_aaaaabhz/merged_segment_55473.csv
+OSError: [Errno 28] No space left on device
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/mnt/cx/EEG_text/merged_segment_extraction.py", line 228, in _process_merged_segment_task
+    # 转换为 DataFrame 并保存
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/util/_decorators.py", line 333, in wrapper
+    # error: "Callable[[VarArg(Any), KwArg(Any)], Any]" has no
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/core/generic.py", line 3989, in to_csv
+    Get values at specified index and level
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/formats/format.py", line 1014, in to_csv
+    - to_csv
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/formats/csvs.py", line 251, in save
+    self.writer = csvlib.writer(
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/common.py", line 157, in __exit__
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/common.py", line 144, in close
+    Returns
+OSError: [Errno 28] No space left on device
+--------------------------------------------------------------------------------
+/mnt/cx/EEG_text/raw_data/TUEV_fast/sub_aaaaabhz/merged_segment_55465.csv
+OSError: [Errno 28] No space left on device
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/mnt/cx/EEG_text/merged_segment_extraction.py", line 228, in _process_merged_segment_task
+    # 转换为 DataFrame 并保存
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/util/_decorators.py", line 333, in wrapper
+    # error: "Callable[[VarArg(Any), KwArg(Any)], Any]" has no
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/core/generic.py", line 3989, in to_csv
+    Get values at specified index and level
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/formats/format.py", line 1014, in to_csv
+    - to_csv
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/formats/csvs.py", line 251, in save
+    self.writer = csvlib.writer(
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/common.py", line 157, in __exit__
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/common.py", line 144, in close
+    Returns
+OSError: [Errno 28] No space left on device
+--------------------------------------------------------------------------------
+/mnt/cx/EEG_text/raw_data/TUEV_fast/sub_aaaaabhz/merged_segment_55478.csv
+OSError: [Errno 28] No space left on device
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/mnt/cx/EEG_text/merged_segment_extraction.py", line 228, in _process_merged_segment_task
+    # 转换为 DataFrame 并保存
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/util/_decorators.py", line 333, in wrapper
+    # error: "Callable[[VarArg(Any), KwArg(Any)], Any]" has no
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/core/generic.py", line 3989, in to_csv
+    Get values at specified index and level
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/formats/format.py", line 1014, in to_csv
+    - to_csv
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/formats/csvs.py", line 251, in save
+    self.writer = csvlib.writer(
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/common.py", line 157, in __exit__
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/common.py", line 144, in close
+    Returns
+OSError: [Errno 28] No space left on device
+--------------------------------------------------------------------------------
+/mnt/cx/EEG_text/raw_data/TUEV_fast/sub_aaaaabhz/merged_segment_55470.csv
+OSError: [Errno 28] No space left on device
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/mnt/cx/EEG_text/merged_segment_extraction.py", line 228, in _process_merged_segment_task
+    # 转换为 DataFrame 并保存
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/util/_decorators.py", line 333, in wrapper
+    # error: "Callable[[VarArg(Any), KwArg(Any)], Any]" has no
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/core/generic.py", line 3989, in to_csv
+    Get values at specified index and level
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/formats/format.py", line 1014, in to_csv
+    - to_csv
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/formats/csvs.py", line 251, in save
+    self.writer = csvlib.writer(
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/common.py", line 157, in __exit__
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/common.py", line 144, in close
+    Returns
+OSError: [Errno 28] No space left on device
+--------------------------------------------------------------------------------
+/mnt/cx/EEG_text/raw_data/TUEV_fast/sub_aaaaabhz/merged_segment_55479.csv
+OSError: [Errno 28] No space left on device
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/mnt/cx/EEG_text/merged_segment_extraction.py", line 228, in _process_merged_segment_task
+    # 转换为 DataFrame 并保存
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/util/_decorators.py", line 333, in wrapper
+    # error: "Callable[[VarArg(Any), KwArg(Any)], Any]" has no
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/core/generic.py", line 3989, in to_csv
+    Get values at specified index and level
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/formats/format.py", line 1014, in to_csv
+    - to_csv
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/formats/csvs.py", line 251, in save
+    self.writer = csvlib.writer(
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/common.py", line 157, in __exit__
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/common.py", line 144, in close
+    Returns
+OSError: [Errno 28] No space left on device
+--------------------------------------------------------------------------------
+/mnt/cx/EEG_text/raw_data/TUEV_fast/sub_aaaaabhz/merged_segment_55482.csv
+OSError: [Errno 28] No space left on device
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/mnt/cx/EEG_text/merged_segment_extraction.py", line 228, in _process_merged_segment_task
+    # 转换为 DataFrame 并保存
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/util/_decorators.py", line 333, in wrapper
+    # error: "Callable[[VarArg(Any), KwArg(Any)], Any]" has no
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/core/generic.py", line 3989, in to_csv
+    Get values at specified index and level
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/formats/format.py", line 1014, in to_csv
+    - to_csv
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/formats/csvs.py", line 251, in save
+    self.writer = csvlib.writer(
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/common.py", line 157, in __exit__
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/common.py", line 144, in close
+    Returns
+OSError: [Errno 28] No space left on device
+--------------------------------------------------------------------------------
+/mnt/cx/EEG_text/raw_data/TUEV_fast/sub_aaaaabhz/merged_segment_55476.csv
+OSError: [Errno 28] No space left on device
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/mnt/cx/EEG_text/merged_segment_extraction.py", line 228, in _process_merged_segment_task
+    # 转换为 DataFrame 并保存
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/util/_decorators.py", line 333, in wrapper
+    # error: "Callable[[VarArg(Any), KwArg(Any)], Any]" has no
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/core/generic.py", line 3989, in to_csv
+    Get values at specified index and level
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/formats/format.py", line 1014, in to_csv
+    - to_csv
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/formats/csvs.py", line 251, in save
+    self.writer = csvlib.writer(
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/common.py", line 157, in __exit__
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/common.py", line 144, in close
+    Returns
+OSError: [Errno 28] No space left on device
+--------------------------------------------------------------------------------
+/mnt/cx/EEG_text/raw_data/TUEV_fast/sub_aaaaabhz/merged_segment_55474.csv
+OSError: [Errno 28] No space left on device
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/mnt/cx/EEG_text/merged_segment_extraction.py", line 228, in _process_merged_segment_task
+    # 转换为 DataFrame 并保存
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/util/_decorators.py", line 333, in wrapper
+    # error: "Callable[[VarArg(Any), KwArg(Any)], Any]" has no
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/core/generic.py", line 3989, in to_csv
+    Get values at specified index and level
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/formats/format.py", line 1014, in to_csv
+    - to_csv
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/formats/csvs.py", line 251, in save
+    self.writer = csvlib.writer(
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/common.py", line 157, in __exit__
+  File "/root/miniconda3/envs/labram/lib/python3.10/site-packages/pandas/io/common.py", line 144, in close
+    Returns
+OSError: [Errno 28] No space left on device
+--------------------------------------------------------------------------------
